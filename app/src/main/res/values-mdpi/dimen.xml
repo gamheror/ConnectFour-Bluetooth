@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 160 dpi -->
+<resources>
+    <!-- TextViews -->
+    <dimen name="size_title">20sp</dimen>
+    <dimen name="padding_title">20dip</dimen>
+
+
+    <!-- Space 1-->
+    <dimen name="size_space_1">35dp</dimen>
+    <dimen name="padding_space_1"></dimen>
+
+    <!-- Space 2-->
+    <dimen name="size_space_2">14.5dp</dimen>
+    <dimen name="padding_space_2"></dimen>
+
+    <!-- Button -->
+    <dimen name="size_button"></dimen>
+    <dimen name="padding_button"></dimen>
+
+    <!-- Grid -->
+    <dimen name="size_grid">250dp</dimen>
+    <dimen name="padding_grid">40dp</dimen>
+
+</resources>
