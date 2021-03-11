@@ -41,8 +41,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".fragments.GameFragment" tools:ignore="Instantiatable">
-        </activity>
         <activity android:name=".activites.Option" tools:ignore="Instantiatable">
         </activity>
         <activity android:name=".BluetoothActivity" tools:ignore="Instantiatable">
