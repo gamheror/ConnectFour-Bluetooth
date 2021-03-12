@@ -1,28 +1,21 @@
 package com.bluetooth.puissanceFour.fragments;
 
 
-import android.animation.Animator;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowInsets;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Chronometer;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluetooth.communicator.BluetoothCommunicator;
@@ -32,9 +25,6 @@ import com.bluetooth.puissanceFour.BluetoothActivity;
 import com.bluetooth.puissanceFour.Global;
 import com.bluetooth.puissanceFour.R;
 import com.bluetooth.puissanceFour.adapters.GridAdapt;
-import com.bluetooth.puissanceFour.gui.CustomAnimator;
-import com.bluetooth.puissanceFour.gui.GuiTools;
-import com.bluetooth.puissanceFour.gui.MessagesAdapter;
 import com.bluetooth.puissanceFour.tools.Player;
 
 
@@ -51,10 +41,10 @@ public class GameFragment extends Fragment {
     private Player yellowPlayer;
     private Player redPlayer;
     private Player actualPlayer;
-
+    private String colorPiece;
     private Global global;
-    private MessagesAdapter mAdapter;
     private BluetoothActivity activity;
+    private static final String TAG = "gamefragment";
 
     private BluetoothCommunicator.Callback communicatorCallback;
 
@@ -85,8 +75,12 @@ public class GameFragment extends Fragment {
                 the peer that have sent the message, we can ignore source, it indicate only if we have received the message
                 as clients or as servers
                  */
-
-                grid.placePiece(Integer.parseInt(String.valueOf(message)), actualPlayer);
+                Log.i(TAG, message.getText());
+                Toast.makeText(activity, message.getText(), Toast.LENGTH_SHORT).show();
+                grid.placePiece(Integer.parseInt(message.getText()), actualPlayer);
+                actualPlayer.decreaseRemainingPawn();
+                actualPlayer = nextPlayer(actualPlayer);
+                Log.i(TAG, actualPlayer.getColor_piece());
                 //smooth scroll
             }
 
@@ -106,6 +100,8 @@ public class GameFragment extends Fragment {
 
         actualPlayer = redPlayer;
 
+
+
     }
 
     public Player nextPlayer(Player player){
@@ -124,11 +120,9 @@ public class GameFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        chronoPlay = view.findViewById(R.id.chronometer);
-        chronoPlay.start();
-
+        Chronometer simpleChronometer = activity.findViewById(R.id.simpleChronometer);
+        simpleChronometer.start();
         simpleGrid = view.findViewById(R.id.gridView);
-
     }
 
     @Override
@@ -136,8 +130,11 @@ public class GameFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         activity = (BluetoothActivity) requireActivity();
         global = (Global) activity.getApplication();
-        Toolbar toolbar = activity.findViewById(R.id.toolbarConversation);
-        activity.setActionBar(toolbar);
+
+        this.colorPiece = activity.getColorPiece();
+        if(this.colorPiece == null){
+            this.onDestroy();
+        }
 
         grid = new GridAdapt(getContext());
         simpleGrid.setAdapter(grid);
@@ -146,22 +143,28 @@ public class GameFragment extends Fragment {
         /*WindowInsets windowInsets = activity.getFragmentContainer().getRootWindowInsets();
         if (windowInsets != null) {
             constraintLayout.dispatchApplyWindowInsets(windowInsets.replaceSystemWindowInsets(windowInsets.getSystemWindowInsetLeft(), windowInsets.getSystemWindowInsetTop(), windowInsets.getSystemWindowInsetRight(), 0));
-        }*/
+        }
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         layoutManager.setStackFromEnd(true);
-        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setLayoutManager(layoutManager);*/
 
         simpleGrid.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                grid.placePiece(position, actualPlayer);
-                if (global.getBluetoothCommunicator().getConnectedPeersList().size() > 0) {
-                    //sending message
-                    Message message = new Message(global, "m", String.valueOf(position), global.getBluetoothCommunicator().getConnectedPeersList().get(0));
-                    global.getBluetoothCommunicator().sendMessage(message);
+                if(actualPlayer.getColor_piece() == colorPiece) {
+                    grid.placePiece(position, actualPlayer);
+                    if (global.getBluetoothCommunicator().getConnectedPeersList().size() > 0) {
+                        //sending message
+                        Message message = new Message(global, "m", String.valueOf(position), global.getBluetoothCommunicator().getConnectedPeersList().get(0));
+                        actualPlayer.decreaseRemainingPawn();
+                        global.getBluetoothCommunicator().sendMessage(message);
+                    }
+                    actualPlayer = nextPlayer(actualPlayer);
                 }
-                actualPlayer =  nextPlayer(actualPlayer);
+                else{
+                    Toast.makeText(activity, "C'est au tour de l'adversaire", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
