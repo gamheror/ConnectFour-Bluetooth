@@ -4,7 +4,7 @@ public class Player {
 
     private String id_bluetooth;
     private String color_piece;
-
+    private int remainingPawn = 21;
     public Player(String id, String jeton) {
         id_bluetooth = id;
         color_piece = jeton;
@@ -16,6 +16,14 @@ public class Player {
 
     public String getId_bluetooth() {
         return id_bluetooth;
+    }
+
+    public int getRemainingPawn(){
+        return remainingPawn;
+    }
+
+    public int decreaseRemainingPawn(){
+        remainingPawn -= 1;
     }
 
     public boolean playerWin(final String[][] game) {

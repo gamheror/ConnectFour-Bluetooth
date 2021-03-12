@@ -45,6 +45,7 @@ import com.bluetooth.puissanceFour.gui.CustomAnimator;
 import com.bluetooth.puissanceFour.gui.GuiTools;
 import com.bluetooth.puissanceFour.gui.PeerListAdapter;
 import com.bluetooth.puissanceFour.gui.RequestDialog;
+import com.bluetooth.puissanceFour.tools.Constants;
 import com.bluetooth.puissanceFour.tools.Tools;
 import com.bluetooth.communicator.BluetoothCommunicator;
 import com.bluetooth.communicator.Peer;
@@ -109,6 +110,7 @@ public class PairingFragment extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             activity.acceptConnection(peer);
+                            activity.setColorPiece(Constants.YELLOW_PIECE);
                         }
                     }, new DialogInterface.OnClickListener() {
                         @Override
@@ -347,6 +349,7 @@ public class PairingFragment extends Fragment {
                 deactivateInputs();
                 appearLoading(null);
                 activity.connect(peer);
+                activity.setColorPiece(Constants.RED_PIECE);
                 startConnectionTimer();
             }
         }, null);

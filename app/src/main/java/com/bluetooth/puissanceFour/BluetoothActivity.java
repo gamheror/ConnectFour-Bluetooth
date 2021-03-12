@@ -52,6 +52,7 @@ public class BluetoothActivity extends AppCompatActivity {
     private int currentFragment = -1;
     private ArrayList<Callback> clientsCallbacks = new ArrayList<>();
     private CoordinatorLayout fragmentContainer;
+    private String colorPiece;
 
 
     @Override
@@ -170,6 +171,16 @@ public class BluetoothActivity extends AppCompatActivity {
             }
         }
         return -1;
+    }
+
+    public void setColorPiece(String s){
+        this.colorPiece = s;
+    }
+    public String getColorPiece(){
+        if(this.colorPiece != null) {
+            return this.colorPiece;
+        }
+        return null;
     }
 
     @Override
