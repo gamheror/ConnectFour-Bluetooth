@@ -1,32 +1,34 @@
 package com.bluetooth.puissanceFour.adapters;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
 import com.bluetooth.puissanceFour.R;
+import com.bluetooth.puissanceFour.fragments.GameFragment;
+import com.bluetooth.puissanceFour.gui.ShowPopUp;
 import com.bluetooth.puissanceFour.tools.Constants;
 import com.bluetooth.puissanceFour.tools.Player;
 
 public class GridAdapt extends BaseAdapter {
 
+    public static String msg;
     private int[] piecesTray = new int[42];
     private String[][] piecesPlayed = new String[7][6];
     private int[] piecesColumn = new int[7];
-
     private LayoutInflater inflter;
-    private Context context;
-
-    private Player player_1;
-    private Player player_2;
+    private ShowPopUp pop;
 
     public GridAdapt (Context applicationContext){
-        this.context = applicationContext;
+        pop = new ShowPopUp();
         inflter = (LayoutInflater.from(applicationContext));
-
         initGrid();
     }
 
@@ -53,7 +55,7 @@ public class GridAdapt extends BaseAdapter {
         return convertView;
     }
 
-    private void initGrid(){
+    public void initGrid(){
         for(int i = 0; i<=41; i++)
             piecesTray[i] = R.drawable.ic_vide;
 
@@ -64,7 +66,7 @@ public class GridAdapt extends BaseAdapter {
         }
     }
 
-    public void placePiece(int position, Player player){
+    public void placePiece(int position, Player player, String colorPhone){
         int column = position % 7;
 
         if(piecesColumn[column] < 6 ){
@@ -89,11 +91,18 @@ public class GridAdapt extends BaseAdapter {
 
                    if (!player.playerWin(piecesPlayed)) {
                         if (!stillPlayable()) {
-                            //AlertDialog -> EQUALITY
+                            this.msg = "Egalité !";
+                            pop.start(this);
                         }
                     } else {
-                        //alerteDialog -> WIN
-                        //alerteDialog -> LOOSE
+                       if(player.getColor_piece() == colorPhone) {
+                           this.msg = "Vous avez gagné !";
+                           pop.start(this);
+                       }
+                       else{
+                           this.msg = "Vous avez perdu !";
+                           pop.start(this);
+                       }
                     }
                 } else {
                     line --;
@@ -113,7 +122,4 @@ public class GridAdapt extends BaseAdapter {
         }
         return playable;
     }
-
-
-
 }

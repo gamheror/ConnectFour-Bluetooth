@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Chronometer;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,12 +32,8 @@ import com.bluetooth.puissanceFour.tools.Player;
 
 public class GameFragment extends Fragment {
 
-    private ImageView selectedImage;
     private GridAdapt grid;
     private GridView simpleGrid;
-    private Chronometer chronoPlay;
-    private RecyclerView mRecyclerView;
-    private ConstraintLayout constraintLayout;
 
     private Player yellowPlayer;
     private Player redPlayer;
@@ -45,7 +42,8 @@ public class GameFragment extends Fragment {
     private Global global;
     private BluetoothActivity activity;
     private static final String TAG = "gamefragment";
-
+    private TextView RedRemainingPaw;
+    private TextView YellowRemainingPaw;
     private BluetoothCommunicator.Callback communicatorCallback;
 
     public GameFragment() {
@@ -77,7 +75,7 @@ public class GameFragment extends Fragment {
                  */
                 Log.i(TAG, message.getText());
                 Toast.makeText(activity, message.getText(), Toast.LENGTH_SHORT).show();
-                grid.placePiece(Integer.parseInt(message.getText()), actualPlayer);
+                grid.placePiece(Integer.parseInt(message.getText()), actualPlayer, colorPiece);
                 actualPlayer.decreaseRemainingPawn();
                 actualPlayer = nextPlayer(actualPlayer);
                 Log.i(TAG, actualPlayer.getColor_piece());
@@ -100,8 +98,6 @@ public class GameFragment extends Fragment {
 
         actualPlayer = redPlayer;
 
-
-
     }
 
     public Player nextPlayer(Player player){
@@ -120,9 +116,15 @@ public class GameFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Chronometer simpleChronometer = activity.findViewById(R.id.simpleChronometer);
+        Chronometer simpleChronometer = view.findViewById(R.id.simpleChronometer);
         simpleChronometer.start();
         simpleGrid = view.findViewById(R.id.gridView);
+
+        redPlayer.setViewText((TextView) view.findViewById(R.id.RedPawn));
+        redPlayer.getViewText().setText("Remaining Pawn :" + redPlayer.getRemainingPawn());
+
+        yellowPlayer.setViewText((TextView) view.findViewById(R.id.YellowPawn));
+        yellowPlayer.getViewText().setText("Remaining Pawn :" + yellowPlayer.getRemainingPawn());
     }
 
     @Override
@@ -138,26 +140,17 @@ public class GameFragment extends Fragment {
 
         grid = new GridAdapt(getContext());
         simpleGrid.setAdapter(grid);
-        // we give the constraint layout the information on the system measures (status bar etc.), which has the fragmentContainer,
-        // because they are not passed to it if started with a Transaction and therefore it overlaps the status bar because it fitsSystemWindows does not work
-        /*WindowInsets windowInsets = activity.getFragmentContainer().getRootWindowInsets();
-        if (windowInsets != null) {
-            constraintLayout.dispatchApplyWindowInsets(windowInsets.replaceSystemWindowInsets(windowInsets.getSystemWindowInsetLeft(), windowInsets.getSystemWindowInsetTop(), windowInsets.getSystemWindowInsetRight(), 0));
-        }
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
-        layoutManager.setStackFromEnd(true);
-        mRecyclerView.setLayoutManager(layoutManager);*/
 
         simpleGrid.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(actualPlayer.getColor_piece() == colorPiece) {
-                    grid.placePiece(position, actualPlayer);
+                    grid.placePiece(position, actualPlayer, colorPiece);
                     if (global.getBluetoothCommunicator().getConnectedPeersList().size() > 0) {
                         //sending message
                         Message message = new Message(global, "m", String.valueOf(position), global.getBluetoothCommunicator().getConnectedPeersList().get(0));
                         actualPlayer.decreaseRemainingPawn();
+                        actualPlayer.getViewText().setText("Remaining Pawn :" + actualPlayer.getRemainingPawn());
                         global.getBluetoothCommunicator().sendMessage(message);
                     }
                     actualPlayer = nextPlayer(actualPlayer);
@@ -185,5 +178,6 @@ public class GameFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
     }
+
 
 }

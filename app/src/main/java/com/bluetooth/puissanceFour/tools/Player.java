@@ -1,10 +1,14 @@
 package com.bluetooth.puissanceFour.tools;
 
+import android.widget.TextView;
+
 public class Player {
 
     private String id_bluetooth;
     private String color_piece;
     private int remainingPawn = 21;
+    private TextView showRemainingPawn;
+
     public Player(String id, String jeton) {
         id_bluetooth = id;
         color_piece = jeton;
@@ -18,11 +22,18 @@ public class Player {
         return id_bluetooth;
     }
 
-    public int getRemainingPawn(){
-        return remainingPawn;
+    public String getRemainingPawn(){
+        return String.valueOf(remainingPawn);
+    }
+    public void setViewText(TextView textview){
+        this.showRemainingPawn = textview;
     }
 
-    public int decreaseRemainingPawn(){
+    public TextView getViewText(){
+        return this.showRemainingPawn;
+    }
+
+    public void decreaseRemainingPawn(){
         remainingPawn -= 1;
     }
 
