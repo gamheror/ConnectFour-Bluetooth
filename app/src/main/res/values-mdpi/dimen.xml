@@ -22,4 +22,8 @@
     <dimen name="size_grid">250dp</dimen>
     <dimen name="padding_grid">40dp</dimen>
 
+    <!-- Include -->
+    <dimen name="size_include">200dp</dimen>
+    <dimen name="margin_top_include">15dp</dimen>
+
 </resources>

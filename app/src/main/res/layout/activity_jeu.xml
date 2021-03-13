@@ -21,7 +21,7 @@
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/size_title"
                 android:text="Joueur actuel : " />
 
             <Chronometer
@@ -31,7 +31,11 @@
                 android:layout_gravity="center"
                 tools:ignore="MissingConstraints" />
 
-            <include layout="@layout/content_jeu" />
+            <include
+                layout="@layout/content_jeu"
+                android:layout_height="@dimen/size_include"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/margin_top_include"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

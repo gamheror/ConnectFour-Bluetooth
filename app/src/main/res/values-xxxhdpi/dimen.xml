@@ -21,4 +21,8 @@
     <dimen name="size_grid">650dp</dimen>
     <dimen name="padding_grid">75dp</dimen>
 
+    <!-- Include -->
+    <dimen name="size_include">500dp</dimen>
+    <dimen name="margin_top_include">40dp</dimen>
+
 </resources>

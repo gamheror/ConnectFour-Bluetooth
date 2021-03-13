@@ -114,11 +114,11 @@ public class GridAdapt extends BaseAdapter {
     }
 
     private boolean stillPlayable() {
-        boolean playable = true;
+        boolean playable = false;
 
         for(int i=0; i<=6; i++){
-            if(this.piecesColumn[i] == 6)
-                playable = false;
+            if(this.piecesColumn[i] < 6)
+                playable = true;
         }
         return playable;
     }
