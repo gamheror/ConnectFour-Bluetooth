@@ -26,17 +26,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mStatusTv 			= (TextView) findViewById(R.id.tv_status);
-        mActivateBtn 		= (Button) findViewById(R.id.btn_enable);
-        Button b_jouer = (Button) findViewById(R.id.jouer);
-        Button b_quitter = (Button) findViewById(R.id.quitter);
+        mStatusTv = (TextView) findViewById(R.id.tv_status);
+        mActivateBtn = (Button) findViewById(R.id.btn_enable);
         mBluetoothAdapter	= BluetoothAdapter.getDefaultAdapter();
 
-        b_jouer.setOnClickListener(new View.OnClickListener() {
+        Button b_play = (Button) findViewById(R.id.play);
+        Button b_exit = (Button) findViewById(R.id.exit);
+
+        b_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent_jouer = new Intent(getApplicationContext(), BluetoothActivity.class);
-                startActivityForResult(intent_jouer, 42);
+                Intent intent_play = new Intent(getApplicationContext(), BluetoothActivity.class);
+                startActivityForResult(intent_play, 42);
             }
         });
 
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             showDisabled();
         }
 
-        b_quitter.setOnClickListener(new View.OnClickListener(){
+        b_exit.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 finish();
             }

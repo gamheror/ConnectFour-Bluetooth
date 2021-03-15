@@ -213,6 +213,9 @@ public class GameFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(actualPlayer.getColor_piece() == colorPiece) {
+                    TextView txtActualPlayer = (TextView) view.findViewById(R.id.actualPlayer);
+                    txtActualPlayer.setText("VOUS JOUEZ");
+
                     String resGame = grid.placePiece(position, actualPlayer, colorPiece);
 
                     if (global.getBluetoothCommunicator().getConnectedPeersList().size() > 0) {
@@ -234,6 +237,9 @@ public class GameFragment extends Fragment {
                     }
 
                 } else {
+                    TextView txtActualPlayer = (TextView) view.findViewById(R.id.actualPlayer);
+                    txtActualPlayer.setText("VOTRE ADVERSAIRE JOUE");
+
                     Toast.makeText(activity, "C'est au tour de l'adversaire", Toast.LENGTH_SHORT).show();
                 }
             }

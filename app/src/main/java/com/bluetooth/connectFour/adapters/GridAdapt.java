@@ -21,8 +21,6 @@ public class GridAdapt extends BaseAdapter {
     private LayoutInflater inflter;
 
     public GridAdapt (Context applicationContext){
-
-
         inflter = (LayoutInflater.from(applicationContext));
         initGrid();
     }
@@ -42,7 +40,6 @@ public class GridAdapt extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         convertView = inflter.inflate(R.layout.row_pion,parent,false);
         ImageView icon = (ImageView) convertView.findViewById(R.id.imagePion);
         icon.setImageResource(piecesTray[position]);
