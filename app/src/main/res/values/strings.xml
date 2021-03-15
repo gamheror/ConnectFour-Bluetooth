@@ -19,4 +19,7 @@
 
     <string name="text_pair">Pair</string>
     <string name="equal_game">EQUALITY</string>
+    <string name="jouer">JOUER</string>
+    <string name="quitter">QUITTER</string>
+    <string name="todo">TODO</string>
 </resources>
