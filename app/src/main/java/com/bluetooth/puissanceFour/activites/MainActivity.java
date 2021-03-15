@@ -3,7 +3,10 @@ package com.bluetooth.puissanceFour.activites;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -54,12 +57,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        if (mBluetoothAdapter.isEnabled()) {
+            showEnabled();
+        } else {
+            showDisabled();
+        }
 
         b_quitter.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                finish();
             }
         });
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+        registerReceiver(mReceiver, filter);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -67,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 48)
             Toast.makeText(this, "Code 48 récupéré", Toast.LENGTH_LONG).show();
     }
+
     private void showEnabled() {
         mStatusTv.setText("Bluetooth is On");
         mStatusTv.setTextColor(Color.BLUE);
@@ -83,11 +96,18 @@ public class MainActivity extends AppCompatActivity {
         mActivateBtn.setEnabled(true);
     }
 
-    private void showUnsupported() {
-        mStatusTv.setText("Bluetooth is unsupported by this device");
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
 
-        mActivateBtn.setText("Enable");
-        mActivateBtn.setEnabled(false);
-    }
+            if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(action)) {
+                final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
+
+                if (state == BluetoothAdapter.STATE_ON) {
+                    showEnabled();
+                }
+            }
+        }
+    };
 
 }
