@@ -1,23 +1,25 @@
 package com.bluetooth.puissanceFour.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.Chronometer;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluetooth.communicator.BluetoothCommunicator;
 import com.bluetooth.communicator.Message;
@@ -25,7 +27,9 @@ import com.bluetooth.communicator.Peer;
 import com.bluetooth.puissanceFour.BluetoothActivity;
 import com.bluetooth.puissanceFour.Global;
 import com.bluetooth.puissanceFour.R;
+import com.bluetooth.puissanceFour.activites.MainActivity;
 import com.bluetooth.puissanceFour.adapters.GridAdapt;
+import com.bluetooth.puissanceFour.tools.Constants;
 import com.bluetooth.puissanceFour.tools.Player;
 
 
@@ -45,6 +49,9 @@ public class GameFragment extends Fragment {
     private TextView RedRemainingPaw;
     private TextView YellowRemainingPaw;
     private BluetoothCommunicator.Callback communicatorCallback;
+    private Chronometer simpleChronometer;
+
+    private View globalView;
 
     public GameFragment() {
         //an empty constructor is always needed for fragments
@@ -52,6 +59,7 @@ public class GameFragment extends Fragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         communicatorCallback = new BluetoothCommunicator.Callback() {
             @Override
@@ -74,12 +82,22 @@ public class GameFragment extends Fragment {
                 as clients or as servers
                  */
                 Log.i(TAG, message.getText());
-                Toast.makeText(activity, message.getText(), Toast.LENGTH_SHORT).show();
-                grid.placePiece(Integer.parseInt(message.getText()), actualPlayer, colorPiece);
-                actualPlayer.decreaseRemainingPawn();
-                actualPlayer = nextPlayer(actualPlayer);
-                Log.i(TAG, actualPlayer.getColor_piece());
-                //smooth scroll
+
+                String resGame = grid.placePiece(Integer.parseInt(message.getText()), actualPlayer, actualPlayer.getColor_piece());
+
+                if (resGame == Constants.IN_GAME) {
+                    actualPlayer.decreaseRemainingPawn();
+                    actualPlayer.getViewText().setText("Remaining Pawn :" + actualPlayer.getRemainingPawn());
+                    actualPlayer = nextPlayer(actualPlayer);
+                } else {
+                    if(resGame == Constants.RES_LOOSE){
+                        ShowPopup(globalView,"Vous avez gagné");
+                    } else if (resGame == Constants.RES_WINS){
+                        ShowPopup(globalView,"Vous avez perdu");
+                    } else {
+                        ShowPopup(globalView,"Egalité");
+                    }
+                }
             }
 
             @Override
@@ -93,11 +111,60 @@ public class GameFragment extends Fragment {
             }
         };
 
-        yellowPlayer = new Player("12" , "Y_P");
-        redPlayer = new Player("2" ,"R_P");
+        yellowPlayer = new Player("Y_P");
+        redPlayer = new Player("R_P");
 
         actualPlayer = redPlayer;
 
+    }
+
+    public void ShowPopup(View v, String res) {
+        TextView txtclose;
+        TextView txtRes;
+        TextView txtChrono;
+
+        Button butHome;
+        Button butReplay;
+
+        simpleChronometer.stop();
+
+        final View popupView = LayoutInflater.from(getActivity()).inflate(R.layout.result_popup, null);
+        final PopupWindow popupWindow = new PopupWindow(popupView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+
+        txtclose = (TextView) popupView.findViewById(R.id.txtclose);
+
+        txtRes = (TextView) popupView.findViewById(R.id.result);
+        txtRes.setText(res);
+
+        txtChrono = (TextView) popupView.findViewById(R.id.chrono);
+        txtChrono.setText(simpleChronometer.getText());
+
+        butHome = (Button) popupView.findViewById(R.id.Accueil);
+        butHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent_home = new Intent(getContext(), MainActivity.class);
+                startActivityForResult(intent_home, 48);
+            }
+        });
+
+        butReplay = (Button) popupView.findViewById(R.id.Reset);
+        butReplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.setFragment(activity.GAME_FRAGMENT);
+                popupWindow.dismiss();
+            }
+        });
+
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+
+        popupWindow.showAsDropDown(popupView, 0, 0);
     }
 
     public Player nextPlayer(Player player){
@@ -116,7 +183,9 @@ public class GameFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Chronometer simpleChronometer = view.findViewById(R.id.simpleChronometer);
+
+        globalView = view;
+        simpleChronometer = view.findViewById(R.id.simpleChronometer);
         simpleChronometer.start();
         simpleGrid = view.findViewById(R.id.gridView);
 
@@ -145,17 +214,27 @@ public class GameFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(actualPlayer.getColor_piece() == colorPiece) {
-                    grid.placePiece(position, actualPlayer, colorPiece);
+                    String resGame = grid.placePiece(position, actualPlayer, colorPiece);
+
                     if (global.getBluetoothCommunicator().getConnectedPeersList().size() > 0) {
                         //sending message
                         Message message = new Message(global, "m", String.valueOf(position), global.getBluetoothCommunicator().getConnectedPeersList().get(0));
                         actualPlayer.decreaseRemainingPawn();
                         actualPlayer.getViewText().setText("Remaining Pawn :" + actualPlayer.getRemainingPawn());
                         global.getBluetoothCommunicator().sendMessage(message);
+
+                        actualPlayer = nextPlayer(actualPlayer);
                     }
-                    actualPlayer = nextPlayer(actualPlayer);
-                }
-                else{
+
+                    if(resGame == Constants.RES_LOOSE){
+                        ShowPopup(view,"Vous avez perdu");
+                    } else if (resGame == Constants.RES_WINS){
+                        ShowPopup(view,"Vous avez gagné");
+                    } else if (resGame == Constants.RES_EQUAL) {
+                        ShowPopup(view,"Egalité");
+                    }
+
+                } else {
                     Toast.makeText(activity, "C'est au tour de l'adversaire", Toast.LENGTH_SHORT).show();
                 }
             }

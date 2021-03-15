@@ -22,7 +22,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@color/very_very_light_gray"
+    android:background="@drawable/background_box"
     android:fitsSystemWindows="true">
 
     <android.widget.Toolbar

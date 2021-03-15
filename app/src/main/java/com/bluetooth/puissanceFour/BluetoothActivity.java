@@ -143,14 +143,14 @@ public class BluetoothActivity extends AppCompatActivity {
             }
             case GAME_FRAGMENT: {
                 // possible setting of the fragment
-                if (getCurrentFragment() != GAME_FRAGMENT) {
-                    GameFragment gameFragment = new GameFragment();
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                    transaction.replace(R.id.fragment_container, gameFragment);
-                    transaction.commit();
-                    currentFragment = GAME_FRAGMENT;
-                }
+
+                GameFragment gameFragment = new GameFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                transaction.replace(R.id.fragment_container, gameFragment);
+                transaction.commit();
+                currentFragment = GAME_FRAGMENT;
+
                 break;
             }
         }

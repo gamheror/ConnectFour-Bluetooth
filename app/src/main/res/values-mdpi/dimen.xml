@@ -26,4 +26,7 @@
     <dimen name="size_include">200dp</dimen>
     <dimen name="margin_top_include">15dp</dimen>
 
+    <!-- Pion -->
+    <dimen name="size_piece">50px</dimen>
+
 </resources>

@@ -1,6 +1,7 @@
 package com.bluetooth.puissanceFour.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.bluetooth.puissanceFour.R;
-import com.bluetooth.puissanceFour.gui.ShowPopUp;
 import com.bluetooth.puissanceFour.tools.Constants;
 import com.bluetooth.puissanceFour.tools.Player;
 
@@ -19,10 +19,10 @@ public class GridAdapt extends BaseAdapter {
     private String[][] piecesPlayed = new String[7][6];
     private int[] piecesColumn = new int[7];
     private LayoutInflater inflter;
-    private ShowPopUp pop;
 
     public GridAdapt (Context applicationContext){
-        pop = new ShowPopUp();
+
+
         inflter = (LayoutInflater.from(applicationContext));
         initGrid();
     }
@@ -61,7 +61,7 @@ public class GridAdapt extends BaseAdapter {
         }
     }
 
-    public void placePiece(int position, Player player, String colorPhone){
+    public String placePiece(int position, Player player, String colorPhone){
         int column = position % 7;
 
         if(piecesColumn[column] < 6 ){
@@ -73,7 +73,7 @@ public class GridAdapt extends BaseAdapter {
                     place = true;
 
                     piecesColumn[column] = piecesColumn[column] + 1;
-                    piecesPlayed[column][line] = player.getId_bluetooth();
+                    piecesPlayed[column][line] = player.getColor_piece();
 
                     int newPosition = column + (line * 7);
 
@@ -84,20 +84,24 @@ public class GridAdapt extends BaseAdapter {
 
                     notifyDataSetChanged();
 
-                   if (!player.playerWin(piecesPlayed)) {
+                    if (!player.playerWin(piecesPlayed)) {
                         if (!stillPlayable()) {
+                            Log.i("1","???");
                             this.msg = "Egalité !";
-                            pop.start(this);
+                            return Constants.RES_EQUAL;
                         }
                     } else {
-                       if(player.getColor_piece() == colorPhone) {
-                           this.msg = "Vous avez gagné !";
-                           pop.start(this);
-                       }
-                       else{
-                           this.msg = "Vous avez perdu !";
-                           pop.start(this);
-                       }
+                        if(player.getColor_piece() == colorPhone) {
+                            Log.i("1","win");
+                            this.msg = "Vous avez gagné !";
+                            return Constants.RES_WINS;
+                        }
+                        else{
+                            System.out.println("non");
+                            Log.i("1","perdu");
+                            this.msg = "Vous avez perdu !";
+                            return Constants.RES_LOOSE;
+                        }
                     }
                 } else {
                     line --;
@@ -106,6 +110,8 @@ public class GridAdapt extends BaseAdapter {
         } else {
             System.out.println("Essayez une autre colonne");
         }
+
+        return Constants.IN_GAME;
     }
 
     private boolean stillPlayable() {

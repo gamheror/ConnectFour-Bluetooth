@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showEnabled() {
         mStatusTv.setText("Bluetooth is On");
-        mStatusTv.setTextColor(Color.BLUE);
+        mStatusTv.setTextColor(Color.GREEN);
 
         mActivateBtn.setText("Disable");
         mActivateBtn.setEnabled(true);
