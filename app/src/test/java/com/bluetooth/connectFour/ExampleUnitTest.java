@@ -1,4 +1,4 @@
-package com.bluetooth.puissanceFour;
+package com.bluetooth.connectFour;
 
 import org.junit.Test;
 

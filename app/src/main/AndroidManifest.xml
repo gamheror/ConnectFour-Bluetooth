@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.bluetooth.puissanceFour">
+    package="com.bluetooth.connectFour">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
-        android:name=".Global"
+        android:name="com.bluetooth.connectFour.Global"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,13 +16,13 @@
         android:supportsRtl="true"
         android:largeHeap="true"
         android:theme="@style/Theme.Speech">
-        <activity android:name=".activites.MainActivity">
+        <activity android:name="com.bluetooth.connectFour.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BluetoothActivity" tools:ignore="Instantiatable">
+        <activity android:name="com.bluetooth.connectFour.BluetoothActivity" tools:ignore="Instantiatable">
         </activity>
 
 

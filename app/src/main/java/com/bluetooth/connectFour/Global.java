@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.bluetooth.puissanceFour;
+package com.bluetooth.connectFour;
 
 import android.app.Application;
 

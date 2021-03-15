@@ -1,9 +1,8 @@
-package com.bluetooth.puissanceFour.fragments;
+package com.bluetooth.connectFour.fragments;
 
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,13 +23,13 @@ import androidx.fragment.app.Fragment;
 import com.bluetooth.communicator.BluetoothCommunicator;
 import com.bluetooth.communicator.Message;
 import com.bluetooth.communicator.Peer;
-import com.bluetooth.puissanceFour.BluetoothActivity;
-import com.bluetooth.puissanceFour.Global;
-import com.bluetooth.puissanceFour.R;
-import com.bluetooth.puissanceFour.activites.MainActivity;
-import com.bluetooth.puissanceFour.adapters.GridAdapt;
-import com.bluetooth.puissanceFour.tools.Constants;
-import com.bluetooth.puissanceFour.tools.Player;
+import com.bluetooth.connectFour.BluetoothActivity;
+import com.bluetooth.connectFour.Global;
+import com.bluetooth.connectFour.R;
+import com.bluetooth.connectFour.MainActivity;
+import com.bluetooth.connectFour.adapters.GridAdapt;
+import com.bluetooth.connectFour.tools.Constants;
+import com.bluetooth.connectFour.tools.Player;
 
 
 

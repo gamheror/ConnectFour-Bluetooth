@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.bluetooth.puissanceFour.gui;
+package com.bluetooth.connectFour.gui;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -23,8 +23,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.bluetooth.puissanceFour.R;
-import com.bluetooth.puissanceFour.tools.Timer;
+import com.bluetooth.connectFour.R;
+import com.bluetooth.connectFour.tools.Timer;
 
 public class RequestDialog {
     private final int SHOW_TIMER_SECONDS = 5;

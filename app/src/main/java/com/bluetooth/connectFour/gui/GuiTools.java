@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.bluetooth.puissanceFour.gui;
+package com.bluetooth.connectFour.gui;
 
 import android.content.Context;
 import android.util.DisplayMetrics;

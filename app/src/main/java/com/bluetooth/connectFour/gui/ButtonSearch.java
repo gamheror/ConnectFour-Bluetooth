@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.bluetooth.puissanceFour.gui;
+package com.bluetooth.connectFour.gui;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -28,7 +28,7 @@ import androidx.appcompat.widget.AppCompatImageButton;
 
 import java.util.ArrayList;
 
-import com.bluetooth.puissanceFour.R;
+import com.bluetooth.connectFour.R;
 
 public class ButtonSearch extends AppCompatImageButton {
     private boolean searching = true;

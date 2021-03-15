@@ -1,4 +1,4 @@
-package com.bluetooth.puissanceFour.adapters;
+package com.bluetooth.connectFour.adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.bluetooth.puissanceFour.R;
-import com.bluetooth.puissanceFour.tools.Constants;
-import com.bluetooth.puissanceFour.tools.Player;
+import com.bluetooth.connectFour.R;
+import com.bluetooth.connectFour.tools.Constants;
+import com.bluetooth.connectFour.tools.Player;
 
 public class GridAdapt extends BaseAdapter {
 

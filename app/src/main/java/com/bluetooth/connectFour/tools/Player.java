@@ -1,4 +1,4 @@
-package com.bluetooth.puissanceFour.tools;
+package com.bluetooth.connectFour.tools;
 
 import android.widget.TextView;
 

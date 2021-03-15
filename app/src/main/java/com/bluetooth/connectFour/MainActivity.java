@@ -1,4 +1,4 @@
-package com.bluetooth.puissanceFour.activites;
+package com.bluetooth.connectFour;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,8 +14,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bluetooth.puissanceFour.BluetoothActivity;
-import com.bluetooth.puissanceFour.R;
 
 public class MainActivity extends AppCompatActivity {
 

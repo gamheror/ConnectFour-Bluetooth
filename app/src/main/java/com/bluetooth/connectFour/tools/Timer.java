@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.bluetooth.puissanceFour.tools;
+package com.bluetooth.connectFour.tools;
 
 import android.os.Handler;
 import android.os.Looper;

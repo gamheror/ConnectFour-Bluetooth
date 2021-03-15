@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.bluetooth.puissanceFour.gui;
+package com.bluetooth.connectFour.gui;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -28,7 +28,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
-import com.bluetooth.puissanceFour.R;
+import com.bluetooth.connectFour.R;
 
 public class CustomAnimator {
 

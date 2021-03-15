@@ -1,4 +1,4 @@
-package com.bluetooth.puissanceFour.tools;
+package com.bluetooth.connectFour.tools;
 
 public class Constants {
     public final static String YELLOW_PIECE = "Y_P";

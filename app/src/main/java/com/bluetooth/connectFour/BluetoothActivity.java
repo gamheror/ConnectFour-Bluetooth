@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.bluetooth.puissanceFour;
+package com.bluetooth.connectFour;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,9 +28,9 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 
-import com.bluetooth.puissanceFour.fragments.GameFragment;
-import com.bluetooth.puissanceFour.fragments.PairingFragment;
-import com.bluetooth.puissanceFour.tools.Tools;
+import com.bluetooth.connectFour.fragments.GameFragment;
+import com.bluetooth.connectFour.fragments.PairingFragment;
+import com.bluetooth.connectFour.tools.Tools;
 import com.bluetooth.communicator.BluetoothCommunicator;
 import com.bluetooth.communicator.Peer;
 

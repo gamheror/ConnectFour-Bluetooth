@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.bluetooth.puissanceFour.fragments;
+package com.bluetooth.connectFour.fragments;
 
 import android.animation.Animator;
 import android.bluetooth.BluetoothAdapter;
@@ -37,16 +37,16 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.bluetooth.communicator.tools.Timer;
-import com.bluetooth.puissanceFour.Global;
-import com.bluetooth.puissanceFour.BluetoothActivity;
-import com.bluetooth.puissanceFour.R;
-import com.bluetooth.puissanceFour.gui.ButtonSearch;
-import com.bluetooth.puissanceFour.gui.CustomAnimator;
-import com.bluetooth.puissanceFour.gui.GuiTools;
-import com.bluetooth.puissanceFour.gui.PeerListAdapter;
-import com.bluetooth.puissanceFour.gui.RequestDialog;
-import com.bluetooth.puissanceFour.tools.Constants;
-import com.bluetooth.puissanceFour.tools.Tools;
+import com.bluetooth.connectFour.Global;
+import com.bluetooth.connectFour.BluetoothActivity;
+import com.bluetooth.connectFour.R;
+import com.bluetooth.connectFour.gui.ButtonSearch;
+import com.bluetooth.connectFour.gui.CustomAnimator;
+import com.bluetooth.connectFour.gui.GuiTools;
+import com.bluetooth.connectFour.gui.PeerListAdapter;
+import com.bluetooth.connectFour.gui.RequestDialog;
+import com.bluetooth.connectFour.tools.Constants;
+import com.bluetooth.connectFour.tools.Tools;
 import com.bluetooth.communicator.BluetoothCommunicator;
 import com.bluetooth.communicator.Peer;
 

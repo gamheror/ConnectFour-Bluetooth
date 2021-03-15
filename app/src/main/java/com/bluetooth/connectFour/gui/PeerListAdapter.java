@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.bluetooth.puissanceFour.gui;
+package com.bluetooth.connectFour.gui;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -23,7 +23,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.bluetooth.puissanceFour.R;
+import com.bluetooth.connectFour.R;
 import com.bluetooth.communicator.Peer;
 
 import java.util.ArrayList;
