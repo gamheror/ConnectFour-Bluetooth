@@ -3,17 +3,13 @@ package com.bluetooth.puissanceFour.gui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.bluetooth.puissanceFour.BluetoothActivity;
-import com.bluetooth.puissanceFour.activites.MainActivity;
 import com.bluetooth.puissanceFour.adapters.GridAdapt;
-import com.bluetooth.puissanceFour.fragments.GameFragment;
 
 public class ShowPopUp extends Activity {
 

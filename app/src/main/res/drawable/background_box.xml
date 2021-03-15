@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:startColor="@color/blue_up"
+        android:endColor="@color/blue_down"
+        android:angle="-90" >
+    </gradient>
+</shape>
+
+
+<!--
+LDPI - 0.75x
+MDPI - Original size // means 1.0x here
+HDPI - 1.5x
+XHDPI - 2.0x
+XXHDPI - 3x
+XXXHDPI - 4.0x
+-->

@@ -33,14 +33,6 @@
         android:supportsRtl="true"
         android:largeHeap="true"
         android:theme="@style/Theme.Speech">
-        <activity android:name="com.bluetooth.puissanceFour.activites.MainActivity"
-            android:configChanges="orientation|screenSize">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".BluetoothActivity" tools:ignore="Instantiatable">
         </activity>
 

@@ -31,4 +31,9 @@
     <color name="yellow">#ffd600</color>
     <color name="green">#00c853</color>
 
+    <color name="blue_up">#031936</color>
+    <color name="blue_down">#063675</color>
+
+    <color name="dark_yellow">#A86E00</color>
+
 </resources>

@@ -1,18 +1,13 @@
 package com.bluetooth.puissanceFour.adapters;
 
 import android.content.Context;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 
 import com.bluetooth.puissanceFour.R;
-import com.bluetooth.puissanceFour.fragments.GameFragment;
 import com.bluetooth.puissanceFour.gui.ShowPopUp;
 import com.bluetooth.puissanceFour.tools.Constants;
 import com.bluetooth.puissanceFour.tools.Player;
@@ -57,7 +52,7 @@ public class GridAdapt extends BaseAdapter {
 
     public void initGrid(){
         for(int i = 0; i<=41; i++)
-            piecesTray[i] = R.drawable.ic_vide;
+            piecesTray[i] = R.drawable.ic_pvide;
 
         for(int col = 0; col < 7; col ++){
             for(int line = 0; line < 6; line ++)
@@ -83,9 +78,9 @@ public class GridAdapt extends BaseAdapter {
                     int newPosition = column + (line * 7);
 
                     if (Constants.YELLOW_PIECE.equals(player.getColor_piece()))
-                        piecesTray[newPosition] = R.drawable.ic_jaune;
+                        piecesTray[newPosition] = R.drawable.ic_pjaune;
                     else if (Constants.RED_PIECE.equals(player.getColor_piece()))
-                        piecesTray[newPosition] = R.drawable.ic_rouge;
+                        piecesTray[newPosition] = R.drawable.ic_prouge;
 
                     notifyDataSetChanged();
 

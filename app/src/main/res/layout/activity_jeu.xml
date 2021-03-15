@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container2"
-    android:background="@color/cardview_dark_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -18,18 +17,20 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/size_title"
                 android:text="Joueur actuel : " />
 
             <Chronometer
-                android:id="@+id/simpleChronometer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                tools:ignore="MissingConstraints" />
+                    android:id="@+id/simpleChronometer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    tools:ignore="MissingConstraints" />
+
 
             <include
                 layout="@layout/content_jeu"
@@ -45,9 +46,8 @@
                 <ImageView
                     android:id="@+id/imageView4"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/pionjauneaffichage" />
+                    android:layout_height="match_parent"
+                    android:src="@drawable/pionjauneaffichage" />
 
                 <TextView
                     android:id="@+id/YellowPawn"
@@ -63,14 +63,13 @@
 
                 <ImageView
                     android:id="@+id/imageView5"
-                    android:layout_width="191dp"
-                    android:layout_height="74dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/pionrougeaffichage" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/pionrougeaffichage" />
 
             </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
