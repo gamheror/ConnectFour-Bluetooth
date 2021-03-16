@@ -26,6 +26,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.bluetooth.connectFour.fragments.GameFragment;
@@ -53,7 +54,7 @@ public class BluetoothActivity extends AppCompatActivity {
     private ArrayList<Callback> clientsCallbacks = new ArrayList<>();
     private CoordinatorLayout fragmentContainer;
     private String colorPiece;
-
+    private String txtActualBeg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,6 +184,19 @@ public class BluetoothActivity extends AppCompatActivity {
         return null;
     }
 
+    public void setTxtActualPlayer(String txt){
+        Log.i("wsh","set : " + txt);
+        this.txtActualBeg = txt;
+    }
+
+    public String getTxtActualPlayer(){
+        Log.i("wsh","get : " + this.txtActualBeg);
+        if(this.txtActualBeg != null) {
+            return this.txtActualBeg;
+        }
+        return null;
+    }
+
     @Override
     public void onBackPressed() {
         DialogInterface.OnClickListener confirmExitListener = new DialogInterface.OnClickListener() {
@@ -214,7 +228,6 @@ public class BluetoothActivity extends AppCompatActivity {
     }
 
     protected void showConfirmExitDialog(DialogInterface.OnClickListener confirmListener) {
-        //creazione del dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setMessage("Confirm exit");

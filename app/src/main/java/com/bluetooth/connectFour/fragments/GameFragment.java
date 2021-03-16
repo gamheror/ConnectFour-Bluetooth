@@ -46,6 +46,7 @@ public class GameFragment extends Fragment {
     private BluetoothActivity activity;
     private static final String TAG = "gamefragment";
     private TextView RedRemainingPaw;
+    private TextView actualPlayerTxt;
     private TextView YellowRemainingPaw;
     private BluetoothCommunicator.Callback communicatorCallback;
     private Chronometer simpleChronometer;
@@ -83,7 +84,7 @@ public class GameFragment extends Fragment {
                 Log.i(TAG, message.getText());
 
                 String resGame = grid.placePiece(Integer.parseInt(message.getText()), actualPlayer, actualPlayer.getColor_piece());
-
+                actualPlayerTxt.setText("VOUS JOUEZ");
                 if (resGame == Constants.IN_GAME) {
                     actualPlayer.decreaseRemainingPawn();
                     actualPlayer.getViewText().setText("Remaining Pawn :" + actualPlayer.getRemainingPawn());
@@ -182,7 +183,7 @@ public class GameFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        actualPlayerTxt = view.findViewById(R.id.actualPlayer);
         globalView = view;
         simpleChronometer = view.findViewById(R.id.simpleChronometer);
         simpleChronometer.start();
@@ -205,7 +206,7 @@ public class GameFragment extends Fragment {
         if(this.colorPiece == null){
             this.onDestroy();
         }
-
+        actualPlayerTxt.setText(activity.getTxtActualPlayer());
         grid = new GridAdapt(getContext());
         simpleGrid.setAdapter(grid);
 
@@ -213,8 +214,6 @@ public class GameFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(actualPlayer.getColor_piece() == colorPiece) {
-                    TextView txtActualPlayer = (TextView) view.findViewById(R.id.actualPlayer);
-                    txtActualPlayer.setText("VOUS JOUEZ");
 
                     String resGame = grid.placePiece(position, actualPlayer, colorPiece);
 
@@ -227,7 +226,7 @@ public class GameFragment extends Fragment {
 
                         actualPlayer = nextPlayer(actualPlayer);
                     }
-
+                    actualPlayerTxt.setText("VOTRE ADVERSAIRE JOUE");
                     if(resGame == Constants.RES_LOOSE){
                         ShowPopup(view,"Vous avez perdu");
                     } else if (resGame == Constants.RES_WINS){
@@ -237,10 +236,7 @@ public class GameFragment extends Fragment {
                     }
 
                 } else {
-                    TextView txtActualPlayer = (TextView) view.findViewById(R.id.actualPlayer);
-                    txtActualPlayer.setText("VOTRE ADVERSAIRE JOUE");
-
-                    Toast.makeText(activity, "C'est au tour de l'adversaire", Toast.LENGTH_SHORT).show();
+                   Toast.makeText(activity, "C'est au tour de l'adversaire", Toast.LENGTH_SHORT).show();
                 }
             }
         });

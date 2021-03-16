@@ -111,6 +111,7 @@ public class PairingFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             activity.acceptConnection(peer);
                             activity.setColorPiece(Constants.YELLOW_PIECE);
+                            activity.setTxtActualPlayer("VOTRE ADVERSAIRE JOUE");
                         }
                     }, new DialogInterface.OnClickListener() {
                         @Override
@@ -350,6 +351,7 @@ public class PairingFragment extends Fragment {
                 appearLoading(null);
                 activity.connect(peer);
                 activity.setColorPiece(Constants.RED_PIECE);
+                activity.setTxtActualPlayer("VOUS JOUEZ");
                 startConnectionTimer();
             }
         }, null);
