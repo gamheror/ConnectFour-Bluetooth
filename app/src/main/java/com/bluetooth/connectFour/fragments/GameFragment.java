@@ -143,8 +143,11 @@ public class GameFragment extends Fragment {
         butHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                activity.exitFromConversation();
+                popupWindow.dismiss();
                 Intent intent_home = new Intent(getContext(), MainActivity.class);
                 startActivityForResult(intent_home, 48);
+
             }
         });
 

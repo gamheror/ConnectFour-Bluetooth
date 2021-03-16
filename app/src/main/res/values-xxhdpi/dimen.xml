@@ -18,13 +18,13 @@
 
     <!-- Grid -->
     <dimen name="size_grid">410dp</dimen>
-    <dimen name="padding_grid">15dp</dimen>
+    <dimen name="padding_grid">10dp</dimen>
 
     <!-- Include -->
-    <dimen name="size_include">500dp</dimen>
-    <dimen name="margin_top_include">40dp</dimen>
+    <dimen name="size_include">550dp</dimen>
+    <dimen name="margin_top_include">30dp</dimen>
 
     <!-- Pion -->
-    <dimen name="size_piece">200px</dimen>
+    <dimen name="size_piece">300px</dimen>
 
 </resources>
