@@ -63,7 +63,6 @@ public class PairingFragment extends Fragment {
     private Peer confirmConnectionPeer;
     private ListView listViewGui;
     private Timer connectionTimer;
-    @Nullable
     private PeerListAdapter listView;
     private TextView discoveryDescription;
     private TextView noDevices;
