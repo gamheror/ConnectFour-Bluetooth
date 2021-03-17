@@ -69,7 +69,7 @@ public class RequestDialog {
     }
 
     /**
-     * Méthod use to display dialog window
+     * Method use to display dialog window and start the timer
      */
     public void show() {
         alertDialog.show();
