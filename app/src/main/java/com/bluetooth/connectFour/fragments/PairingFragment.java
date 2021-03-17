@@ -43,7 +43,7 @@ import com.bluetooth.connectFour.R;
 import com.bluetooth.connectFour.gui.ButtonSearch;
 import com.bluetooth.connectFour.gui.CustomAnimator;
 import com.bluetooth.connectFour.gui.GuiTools;
-import com.bluetooth.connectFour.adapters.PeerListAdapter;
+import com.bluetooth.connectFour.adapters.PeerListAdapt;
 import com.bluetooth.connectFour.gui.RequestDialog;
 import com.bluetooth.connectFour.tools.Constants;
 import com.bluetooth.connectFour.tools.Tools;
@@ -63,7 +63,7 @@ public class PairingFragment extends Fragment {
     private Peer confirmConnectionPeer;
     private ListView listViewGui;
     private Timer connectionTimer;
-    private PeerListAdapter listView;
+    private PeerListAdapt listView;
     private TextView discoveryDescription;
     private TextView noDevices;
     private TextView noPermissions;
@@ -121,7 +121,7 @@ public class PairingFragment extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             activity.acceptConnection(peer);
-                            activity.setColorPiece(Constants.YELLOW_PIECE);
+                            activity.setColorPawn(Constants.YELLOW_PAWN);
                             activity.setTxtActualPlayer("VOTRE ADVERSAIRE JOUE");
                         }
                     }, new DialogInterface.OnClickListener() {
@@ -386,7 +386,7 @@ public class PairingFragment extends Fragment {
                 deactivateInputs();
                 appearLoading(null);
                 activity.connect(peer);
-                activity.setColorPiece(Constants.RED_PIECE);
+                activity.setColorPawn(Constants.RED_PAWN);
                 activity.setTxtActualPlayer("VOUS JOUEZ");
                 startConnectionTimer();
             }
@@ -474,7 +474,7 @@ public class PairingFragment extends Fragment {
      * Method used to initialize the list of detected devices
      */
     private void initializePeerList() {
-        final PeerListAdapter.Callback callback = new PeerListAdapter.Callback() {
+        final PeerListAdapt.Callback callback = new PeerListAdapt.Callback() {
             @Override
             public void onFirstItemAdded() {
                 super.onFirstItemAdded();
@@ -500,7 +500,7 @@ public class PairingFragment extends Fragment {
             }
         };
 
-        listView = new PeerListAdapter(activity, new ArrayList<Peer>(), callback);
+        listView = new PeerListAdapt(activity, new ArrayList<Peer>(), callback);
         listViewGui.setAdapter(listView);
     }
 

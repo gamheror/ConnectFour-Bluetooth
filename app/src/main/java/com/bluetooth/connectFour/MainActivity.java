@@ -17,18 +17,18 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView mStatusTv;
-    private Button mActivateBtn;
-    private BluetoothAdapter mBluetoothAdapter;
+    private TextView bluetoothStatus;
+    private Button activateBluetooth;
+    private BluetoothAdapter bluetoothAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mStatusTv = (TextView) findViewById(R.id.tv_status);
-        mActivateBtn = (Button) findViewById(R.id.btn_enable);
-        mBluetoothAdapter	= BluetoothAdapter.getDefaultAdapter();
+        bluetoothStatus = (TextView) findViewById(R.id.tv_status);
+        activateBluetooth = (Button) findViewById(R.id.btn_enable);
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         Button b_exit = (Button) findViewById(R.id.exit);
 
@@ -43,11 +43,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //permit the player to disable or enable the bluetooth depending on its state
-        mActivateBtn.setOnClickListener(new View.OnClickListener() {
+        activateBluetooth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mBluetoothAdapter.isEnabled()) {
-                    mBluetoothAdapter.disable();
+                if (bluetoothAdapter.isEnabled()) {
+                    bluetoothAdapter.disable();
 
                     showDisabled();
                 } else {
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if (mBluetoothAdapter.isEnabled()) {
+        if (bluetoothAdapter.isEnabled()) {
             showEnabled();
         } else {
             showDisabled();
@@ -76,32 +76,26 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(mReceiver, filter);
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 48)
-            Toast.makeText(this, "Code 48 récupéré", Toast.LENGTH_LONG).show();
-    }
-
     /**
      * display the state of the bluetooth when its enable
      */
     private void showEnabled() {
-        mStatusTv.setText("Bluetooth is On");
-        mStatusTv.setTextColor(Color.GREEN);
+        bluetoothStatus.setText("Bluetooth is On");
+        bluetoothStatus.setTextColor(Color.GREEN);
 
-        mActivateBtn.setText("Disable");
-        mActivateBtn.setEnabled(true);
+        activateBluetooth.setText("Disable");
+        activateBluetooth.setEnabled(true);
     }
 
     /**
      * display the state of the bluetooth when its disable
      */
     private void showDisabled() {
-        mStatusTv.setText("Bluetooth is Off");
-        mStatusTv.setTextColor(Color.RED);
+        bluetoothStatus.setText("Bluetooth is Off");
+        bluetoothStatus.setTextColor(Color.RED);
 
-        mActivateBtn.setText("Enable");
-        mActivateBtn.setEnabled(true);
+        activateBluetooth.setText("Enable");
+        activateBluetooth.setEnabled(true);
     }
 
     /**

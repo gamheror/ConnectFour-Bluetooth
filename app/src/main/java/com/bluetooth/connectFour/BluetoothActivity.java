@@ -37,7 +37,7 @@ public class BluetoothActivity extends AppCompatActivity {
     private int currentFragment = -1;
     private ArrayList<Callback> clientsCallbacks = new ArrayList<>();
     private CoordinatorLayout fragmentContainer;
-    private String colorPiece;
+    private String colorPawn;
     private String txtActualBeg;
 
     @Override
@@ -165,16 +165,16 @@ public class BluetoothActivity extends AppCompatActivity {
     /** set the color piece of the player running the app
      * @param s, the color of the pawns
      */
-    public void setColorPiece(String s){
-        this.colorPiece = s;
+    public void setColorPawn(String s){
+        this.colorPawn = s;
     }
 
     /**
      * @return the color of the piece of the player
      */
-    public String getColorPiece(){
-        if(this.colorPiece != null) {
-            return this.colorPiece;
+    public String getColorPawn(){
+        if(this.colorPawn != null) {
+            return this.colorPawn;
         }
         return null;
     }

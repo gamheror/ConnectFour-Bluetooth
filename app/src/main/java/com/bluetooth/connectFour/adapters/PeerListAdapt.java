@@ -13,17 +13,16 @@ import com.bluetooth.connectFour.gui.CustomAnimator;
 
 import java.util.ArrayList;
 
-public class PeerListAdapter extends BaseAdapter {
+public class PeerListAdapt extends BaseAdapter {
     public static final int HOST = 1;
     private ArrayList<Peer> array;
     private LayoutInflater inflater;
     private Callback callback;
-    private CustomAnimator animator = new CustomAnimator();
     private Activity activity;
     private boolean isClickable = true;
     private boolean showToast = false;
 
-    public PeerListAdapter(Activity activity, ArrayList<Peer> array, Callback callback) {
+    public PeerListAdapt(Activity activity, ArrayList<Peer> array, Callback callback) {
         this.array = array;
         this.callback = callback;
         if (array.size() > 0) {
@@ -50,19 +49,19 @@ public class PeerListAdapter extends BaseAdapter {
      * @return
      */
     @Override
-    public Object getItem(int i) {
-        return array.get(i);
+    public Object getItem(int position) {
+        return array.get(position);
     }
 
     /**
      * BaseAdapter method
      * Get the row id associated with the specified position in the list.
-     * @param i
+     * @param position
      * @return
      */
     @Override
-    public long getItemId(int i) {
-        return i;
+    public long getItemId(int position) {
+        return position;
     }
 
     /**
@@ -149,10 +148,6 @@ public class PeerListAdapter extends BaseAdapter {
      */
     public Peer get(int i) {
         return array.get(i);
-    }
-
-    public int indexOf(Peer object) {
-        return array.indexOf(object);
     }
 
     /**

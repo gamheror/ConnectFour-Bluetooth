@@ -2,7 +2,6 @@ package com.bluetooth.connectFour.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +39,6 @@ public class GameFragment extends Fragment {
     private String colorPiece;
     private Global global;
     private BluetoothActivity activity;
-    private static final String TAG = "gamefragment";
     private TextView actualPlayerTxt;
     private BluetoothCommunicator.Callback communicatorCallback;
     private Chronometer simpleChronometer;
@@ -74,9 +72,7 @@ public class GameFragment extends Fragment {
             public void onMessageReceived(Message message, int source) {
                 super.onMessageReceived(message, source);
 
-                Log.i(TAG, message.getText());
-
-                String resGame = grid.placePiece(Integer.parseInt(message.getText()), actualPlayer, actualPlayer.getColor_piece());
+                String resGame = grid.placePiece(Integer.parseInt(message.getText()), actualPlayer, actualPlayer.getColorPawn());
                 actualPlayerTxt.setText("VOUS JOUEZ");
                 if (resGame == Constants.IN_GAME) {
                     actualPlayer.decreaseRemainingPawn();
@@ -84,11 +80,11 @@ public class GameFragment extends Fragment {
                     actualPlayer = nextPlayer(actualPlayer);
                 } else {
                     if(resGame == Constants.RES_LOOSE){
-                        ShowPopup(globalView,"Vous avez gagné");
+                        showPopup(globalView,"Vous avez gagné");
                     } else if (resGame == Constants.RES_WINS){
-                        ShowPopup(globalView,"Vous avez perdu");
+                        showPopup(globalView,"Vous avez perdu");
                     } else {
-                        ShowPopup(globalView,"Egalité");
+                        showPopup(globalView,"Egalité");
                     }
                 }
             }
@@ -122,7 +118,7 @@ public class GameFragment extends Fragment {
      * @param v
      * @param res
      */
-    public void ShowPopup(View v, String res) {
+    public void showPopup(View v, String res) {
         TextView txtclose;
         TextView txtRes;
         TextView txtChrono;
@@ -219,7 +215,7 @@ public class GameFragment extends Fragment {
         global = (Global) activity.getApplication();
 
         //get to color of the pawn of the App's player
-        this.colorPiece = activity.getColorPiece();
+        this.colorPiece = activity.getColorPawn();
         if(this.colorPiece == null){
             this.onDestroy();
         }
@@ -231,7 +227,7 @@ public class GameFragment extends Fragment {
         simpleGrid.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(actualPlayer.getColor_piece() == colorPiece) {
+                if(actualPlayer.getColorPawn() == colorPiece) {
 
                     String resGame = grid.placePiece(position, actualPlayer, colorPiece);
 
@@ -247,11 +243,11 @@ public class GameFragment extends Fragment {
                     actualPlayerTxt.setText("VOTRE ADVERSAIRE JOUE");
                     //check if someone wins or if the players can't play anymore
                     if(resGame == Constants.RES_LOOSE){
-                        ShowPopup(view,"Vous avez perdu");
+                        showPopup(view,"Vous avez perdu");
                     } else if (resGame == Constants.RES_WINS){
-                        ShowPopup(view,"Vous avez gagné");
+                        showPopup(view,"Vous avez gagné");
                     } else if (resGame == Constants.RES_EQUAL) {
-                        ShowPopup(view,"Egalité");
+                        showPopup(view,"Egalité");
                     }
                 } else { //if the player try to play when it's not his turn, display that it's the opponent's turn to play
                    Toast.makeText(activity, "C'est au tour de l'adversaire", Toast.LENGTH_SHORT).show();

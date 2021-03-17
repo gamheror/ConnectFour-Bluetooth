@@ -4,22 +4,22 @@ import android.widget.TextView;
 
 public class Player {
 
-    private String color_piece;
+    private String colorPawn;
     private int remainingPawn = 21;
     private TextView showRemainingPawn;
 
     /** permit to associate a pawn color with the player
-     * @param jeton, the color of the pawn
+     * @param pawn, the color of the pawn
      */
-    public Player(String jeton) {
-        color_piece = jeton;
+    public Player(String pawn) {
+        colorPawn = pawn;
     }
 
     /**
      * @return the pawn's color of the player
      */
-    public String getColor_piece() {
-        return color_piece;
+    public String getColorPawn() {
+        return colorPawn;
     }
 
     /**
@@ -59,10 +59,10 @@ public class Player {
         // Check if player win by column
         for (int i = 0; i<=6; i++) {
             for (int j = 0; j<=2; j++) {
-                if (this.color_piece.equals(game[i][j])
-                        && this.color_piece.equals(game[i][j + 1])
-                        && this.color_piece.equals(game[i][j + 2])
-                        && this.color_piece.equals(game[i][j + 3])) {
+                if (this.colorPawn.equals(game[i][j])
+                        && this.colorPawn.equals(game[i][j + 1])
+                        && this.colorPawn.equals(game[i][j + 2])
+                        && this.colorPawn.equals(game[i][j + 3])) {
                     return true;
                 }
             }
@@ -71,10 +71,10 @@ public class Player {
         // Check if player win by line
         for (int i = 0; i<=3; i++) {
             for (int j = 0; j<=5; j++) {
-                if (this.color_piece.equals(game[i][j])
-                        && this.color_piece.equals(game[i + 1][j])
-                        && this.color_piece.equals(game[i + 2][j])
-                        && this.color_piece.equals(game[i + 3][j])) {
+                if (this.colorPawn.equals(game[i][j])
+                        && this.colorPawn.equals(game[i + 1][j])
+                        && this.colorPawn.equals(game[i + 2][j])
+                        && this.colorPawn.equals(game[i + 3][j])) {
                     return true;
                 }
             }
@@ -83,10 +83,10 @@ public class Player {
         // Check if player win by right diagonal
         for (int i = 0; i<=3; i++) {
             for (int j = 3; j<=5; j++) {
-                if (this.color_piece.equals(game[i][j])
-                        && this.color_piece.equals(game[i + 1][j - 1])
-                        && this.color_piece.equals(game[i + 2][j - 2])
-                        && this.color_piece.equals(game[i + 3][j - 3])) {
+                if (this.colorPawn.equals(game[i][j])
+                        && this.colorPawn.equals(game[i + 1][j - 1])
+                        && this.colorPawn.equals(game[i + 2][j - 2])
+                        && this.colorPawn.equals(game[i + 3][j - 3])) {
                     return true;
                 }
             }
@@ -95,10 +95,10 @@ public class Player {
         // Check if player win by left diagonal
         for (int i = 3; i<=6; i++) {
             for (int j = 3; j<=5; j++) {
-                if (this.color_piece.equals(game[i][j])
-                        && this.color_piece.equals(game[i - 1][j - 1])
-                        && this.color_piece.equals(game[i - 2][j - 2])
-                        && this.color_piece.equals(game[i - 3][j - 3])) {
+                if (this.colorPawn.equals(game[i][j])
+                        && this.colorPawn.equals(game[i - 1][j - 1])
+                        && this.colorPawn.equals(game[i - 2][j - 2])
+                        && this.colorPawn.equals(game[i - 3][j - 3])) {
                     return true;
                 }
             }

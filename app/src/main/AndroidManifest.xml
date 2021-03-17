@@ -24,8 +24,5 @@
         </activity>
         <activity android:name="com.bluetooth.connectFour.BluetoothActivity" tools:ignore="Instantiatable">
         </activity>
-
-
     </application>
-
 </manifest>
