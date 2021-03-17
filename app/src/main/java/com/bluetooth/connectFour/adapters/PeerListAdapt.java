@@ -18,6 +18,7 @@ public class PeerListAdapt extends BaseAdapter {
     private ArrayList<Peer> array;
     private LayoutInflater inflater;
     private Callback callback;
+    private CustomAnimator animator = new CustomAnimator();
     private Activity activity;
     private boolean isClickable = true;
     private boolean showToast = false;

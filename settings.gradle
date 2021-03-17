@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "BluetoothCommunicatorExample"
+rootProject.name = "BluetoothConnectFour"

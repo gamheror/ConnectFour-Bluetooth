@@ -22,7 +22,7 @@ public class Timer {
     public Timer(long durationMillis, final DateCallback dateCallback){
         mainHandler = new Handler(Looper.getMainLooper());
         duration=durationMillis;
-        timer= new CustomCountDownTimer(duration,1000) {
+        timer= new CustomCountDownTimer(durationMillis,1000) {
             @Override
             public void onTick(long millisUntilEnd) {
                 int[] date=convertIntoDate(millisUntilEnd);

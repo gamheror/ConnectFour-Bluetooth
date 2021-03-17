@@ -76,6 +76,12 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(mReceiver, filter);
     }
 
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 48)
+            Toast.makeText(this, "Code 48 récupéré", Toast.LENGTH_LONG).show();
+    }
+
     /**
      * display the state of the bluetooth when its enable
      */

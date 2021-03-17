@@ -22,7 +22,7 @@
     <dimen name="padding_grid">452dp</dimen>
 
     <!-- Include -->
-    <dimen name="size_include">00dp</dimen>
+    <dimen name="size_include">200dp</dimen>
     <dimen name="margin_top_include">40dp</dimen>
 
     <!-- Pion -->

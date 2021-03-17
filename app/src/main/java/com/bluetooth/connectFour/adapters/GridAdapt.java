@@ -29,7 +29,7 @@ public class GridAdapt extends BaseAdapter {
      * @return
      */
     @Override
-    public int getCount() { return 0; }
+    public int getCount() { return pawnsTray.length; }
 
      /**
      * BaseAdapter method
