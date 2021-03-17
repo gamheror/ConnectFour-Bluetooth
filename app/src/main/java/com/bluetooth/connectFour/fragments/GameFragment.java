@@ -37,7 +37,6 @@ public class GameFragment extends Fragment {
 
     private GridAdapt grid;
     private GridView simpleGrid;
-
     private Player yellowPlayer;
     private Player redPlayer;
     private Player actualPlayer;
@@ -48,7 +47,6 @@ public class GameFragment extends Fragment {
     private TextView actualPlayerTxt;
     private BluetoothCommunicator.Callback communicatorCallback;
     private Chronometer simpleChronometer;
-
     private View globalView;
 
     public GameFragment() {
@@ -63,22 +61,22 @@ public class GameFragment extends Fragment {
             @Override
             public void onConnectionLost(Peer peer) {
                 super.onConnectionLost(peer);
-                //Toast.makeText(this,"Connection lost, reconnecting...",Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onConnectionResumed(Peer peer) {
                 super.onConnectionResumed(peer);
-                //Toast.makeText(this,"Connection resumed",Toast.LENGTH_LONG).show();
             }
 
+            /** means that we have received a message containing TEXT, for know the sender we can call message.getSender() that return
+            the peer that have sent the message, we can ignore source, it indicate only if we have received the message as clients or as servers
+             * @param message the message we received
+             * @param source the sender
+             */
             @Override
             public void onMessageReceived(Message message, int source) {
                 super.onMessageReceived(message, source);
-                /* means that we have received a message containing TEXT, for know the sender we can call message.getSender() that return
-                the peer that have sent the message, we can ignore source, it indicate only if we have received the message
-                as clients or as servers
-                 */
+
                 Log.i(TAG, message.getText());
 
                 String resGame = grid.placePiece(Integer.parseInt(message.getText()), actualPlayer, actualPlayer.getColor_piece());
@@ -98,24 +96,35 @@ public class GameFragment extends Fragment {
                 }
             }
 
+            /** means that the peer is disconnected
+             * @param peer
+             * @param peersLeft number of connected peers remained
+             */
             @Override
             public void onDisconnected(Peer peer, int peersLeft) {
                 super.onDisconnected(peer, peersLeft);
-                /*means that the peer is disconnected, peersLeft indicate the number of connected peers remained
-                 */
+
                 if (peersLeft == 0) {
                     activity.setFragment(BluetoothActivity.DEFAULT_FRAGMENT);
                 }
             }
         };
 
+        //create the 2 players
         yellowPlayer = new Player("Y_P");
         redPlayer = new Player("R_P");
 
+        //the red player always begin the game
         actualPlayer = redPlayer;
 
     }
 
+    /** show a popup when the game finished, ask the player if he want to play against the same player or return to the main menu
+     * also permit the player to inspect the grid when he press the cross
+     * inform the player if he wins, lose or equality, show the chronometer
+     * @param v
+     * @param res
+     */
     public void ShowPopup(View v, String res) {
         TextView txtclose;
         TextView txtRes;
@@ -130,13 +139,21 @@ public class GameFragment extends Fragment {
         final PopupWindow popupWindow = new PopupWindow(popupView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
 
         txtclose = (TextView) popupView.findViewById(R.id.txtclose);
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
 
         txtRes = (TextView) popupView.findViewById(R.id.result);
         txtRes.setText(res);
 
+        //get the time of the chrono
         txtChrono = (TextView) popupView.findViewById(R.id.chrono);
         txtChrono.setText(simpleChronometer.getText());
 
+        //return to the main page
         butHome = (Button) popupView.findViewById(R.id.Accueil);
         butHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,6 +166,7 @@ public class GameFragment extends Fragment {
             }
         });
 
+        //restart the game
         butReplay = (Button) popupView.findViewById(R.id.Reset);
         butReplay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,16 +176,13 @@ public class GameFragment extends Fragment {
             }
         });
 
-        txtclose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
-
         popupWindow.showAsDropDown(popupView, 0, 0);
     }
 
+    /** pass to the next player
+     * @param player the actual player playing
+     * @return the new player who is start to play
+     */
     public Player nextPlayer(Player player){
         if(player == this.redPlayer)
             return this.yellowPlayer;
@@ -186,10 +201,13 @@ public class GameFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         actualPlayerTxt = view.findViewById(R.id.actualPlayer);
         globalView = view;
+        // get and start the chronometer
         simpleChronometer = view.findViewById(R.id.simpleChronometer);
         simpleChronometer.start();
+
         simpleGrid = view.findViewById(R.id.gridView);
 
+        //get and display the remaining pawns of each players
         redPlayer.setViewText((TextView) view.findViewById(R.id.RedPawn));
         redPlayer.getViewText().setText("Remaining Pawn :" + redPlayer.getRemainingPawn());
 
@@ -203,14 +221,16 @@ public class GameFragment extends Fragment {
         activity = (BluetoothActivity) requireActivity();
         global = (Global) activity.getApplication();
 
+        //get to color of the pawn of the App's player
         this.colorPiece = activity.getColorPiece();
         if(this.colorPiece == null){
             this.onDestroy();
         }
+        //display the player who start the game
         actualPlayerTxt.setText(activity.getTxtActualPlayer());
         grid = new GridAdapt(getContext());
         simpleGrid.setAdapter(grid);
-
+        //set a click listener on each box if the grid
         simpleGrid.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -219,15 +239,16 @@ public class GameFragment extends Fragment {
                     String resGame = grid.placePiece(position, actualPlayer, colorPiece);
 
                     if (global.getBluetoothCommunicator().getConnectedPeersList().size() > 0) {
-                        //sending message
+                        //sending a message in which bow the player played
                         Message message = new Message(global, "m", String.valueOf(position), global.getBluetoothCommunicator().getConnectedPeersList().get(0));
-                        actualPlayer.decreaseRemainingPawn();
-                        actualPlayer.getViewText().setText("Remaining Pawn :" + actualPlayer.getRemainingPawn());
                         global.getBluetoothCommunicator().sendMessage(message);
 
+                        actualPlayer.decreaseRemainingPawn(); //decrease the number of remaining pawns
+                        actualPlayer.getViewText().setText("Remaining Pawn :" + actualPlayer.getRemainingPawn()); //display the new number of pawns
                         actualPlayer = nextPlayer(actualPlayer);
                     }
                     actualPlayerTxt.setText("VOTRE ADVERSAIRE JOUE");
+                    //check if someone wins or if the players can't play anymore
                     if(resGame == Constants.RES_LOOSE){
                         ShowPopup(view,"Vous avez perdu");
                     } else if (resGame == Constants.RES_WINS){
@@ -235,8 +256,7 @@ public class GameFragment extends Fragment {
                     } else if (resGame == Constants.RES_EQUAL) {
                         ShowPopup(view,"Egalité");
                     }
-
-                } else {
+                } else { //if the player try to play when it's not his turn, display that it's the opponent's turn to play
                    Toast.makeText(activity, "C'est au tour de l'adversaire", Toast.LENGTH_SHORT).show();
                 }
             }
