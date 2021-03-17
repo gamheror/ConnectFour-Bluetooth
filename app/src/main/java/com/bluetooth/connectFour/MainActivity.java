@@ -30,9 +30,10 @@ public class MainActivity extends AppCompatActivity {
         mActivateBtn = (Button) findViewById(R.id.btn_enable);
         mBluetoothAdapter	= BluetoothAdapter.getDefaultAdapter();
 
-        Button b_play = (Button) findViewById(R.id.play);
         Button b_exit = (Button) findViewById(R.id.exit);
 
+        //start the bluetooth activity to connect and start the game
+        Button b_play = (Button) findViewById(R.id.play);
         b_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //permit the player to disable or enable the bluetooth depending on its state
         mActivateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //create a filter when the bluetooth's state change
         IntentFilter filter = new IntentFilter();
         filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
         registerReceiver(mReceiver, filter);
@@ -79,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Code 48 récupéré", Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * display the state of the bluetooth when its enable
+     */
     private void showEnabled() {
         mStatusTv.setText("Bluetooth is On");
         mStatusTv.setTextColor(Color.GREEN);
@@ -87,6 +93,9 @@ public class MainActivity extends AppCompatActivity {
         mActivateBtn.setEnabled(true);
     }
 
+    /**
+     * display the state of the bluetooth when its disable
+     */
     private void showDisabled() {
         mStatusTv.setText("Bluetooth is Off");
         mStatusTv.setTextColor(Color.RED);
@@ -95,6 +104,9 @@ public class MainActivity extends AppCompatActivity {
         mActivateBtn.setEnabled(true);
     }
 
+    /**
+     * receive message thanks to the filter set before in the OnCreate
+     */
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
