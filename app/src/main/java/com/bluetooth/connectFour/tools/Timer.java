@@ -30,6 +30,11 @@ public class Timer {
     private long duration;
     private Handler mainHandler;
 
+    /**
+     * Timer initialisation
+     * @param durationMillis
+     * @param dateCallback
+     */
     public Timer(long durationMillis, final DateCallback dateCallback){
         mainHandler = new Handler(Looper.getMainLooper());
         duration=durationMillis;
@@ -47,22 +52,9 @@ public class Timer {
         };
     }
 
-    public Timer(long durationMillis, long intervalMillis, final Callback dateCallback){
-        mainHandler = new Handler(Looper.getMainLooper());
-        duration=durationMillis;
-        timer= new CustomCountDownTimer(durationMillis,intervalMillis) {
-            @Override
-            public void onTick(long millisUntilEnd) {
-                dateCallback.onTick(millisUntilEnd);
-            }
-
-            @Override
-            public void onFinish() {
-                dateCallback.onEnd();
-            }
-        };
-    }
-
+    /**
+     * Methode use to start timer
+     */
     public void start(){
         mainHandler.post(new Runnable() {
             @Override
@@ -72,19 +64,11 @@ public class Timer {
         });
     }
 
-    public void cancel(){
-        mainHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                timer.cancel();
-            }
-        });
-    }
-
-    public int[] getDuration(){
-        return convertIntoDate(duration);
-    }
-
+    /**
+     * Methode to convert millisecond to date (h:m:s)
+     * @param millis
+     * @return
+     */
     private int[] convertIntoDate(long millis){
         int hours=0;
         int minutes=0;
@@ -112,8 +96,4 @@ public class Timer {
         void onEnd();
     }
 
-    public interface Callback {
-        void onTick(long millisUntilEnd);
-        void onEnd();
-    }
 }
