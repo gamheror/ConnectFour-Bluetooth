@@ -107,6 +107,8 @@ public class ButtonSearch extends AppCompatImageButton {
     }
 
     /**
+     * @param visible
+     * @param listener
      */
     public void setVisible(boolean visible, @Nullable final CustomAnimator.EndListener listener) {
         if (listener != null) {
@@ -182,14 +184,16 @@ public class ButtonSearch extends AppCompatImageButton {
         }
     }
 
+    /** finished animation notification and elimination of listeners
+     */
     private void notifySetVisibleSuccess() {
-        // finished animation notification and elimination of listeners
         while (listeners.size() > 0) {
             listeners.remove(0).onAnimationEnd();
         }
     }
 
     @Override
+
     public void setOnClickListener(@Nullable OnClickListener l) {
         clickListener = l;
         super.setOnClickListener(clickListener);
@@ -203,12 +207,21 @@ public class ButtonSearch extends AppCompatImageButton {
         return visible;
     }
 
+    /**
+     * @param id
+     * @return
+     */
     public Drawable getDrawable(int id) {
         Drawable drawable = getResources().getDrawable(id, null);
         drawable.setTintList(getColorStateList(getContext(), R.color.primary));
         return drawable;
     }
 
+    /**
+     * @param context
+     * @param colorCode
+     * @return the color state list of the button thanks to the context
+     */
     public static ColorStateList getColorStateList(Context context, int colorCode) {
         return context.getResources().getColorStateList(colorCode, null);
     }
