@@ -26,9 +26,6 @@ import androidx.appcompat.app.AlertDialog;
 import com.bluetooth.connectFour.R;
 import com.bluetooth.connectFour.tools.Timer;
 
-/**
- * Classe permettant l'affichage de la fenêtre de dialogue pour la connection bluetooth entre les deux téléphones
- */
 public class RequestDialog {
     private final int SHOW_TIMER_SECONDS = 5;
     private TextView time;
@@ -52,6 +49,13 @@ public class RequestDialog {
         alertDialog.setCanceledOnTouchOutside(false);
     }
 
+    /**
+     * Method use to build the dialog window
+     * @param context Activity where display the dialog window
+     * @param message Dialog window message
+     * @param positiveListener
+     * @param negativeListener
+     */
     public RequestDialog(Activity context, String message, DialogInterface.OnClickListener positiveListener, DialogInterface.OnClickListener negativeListener) {
         //dialog creation
         final AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(context);
@@ -65,7 +69,7 @@ public class RequestDialog {
     }
 
     /**
-     * Méthode qui permet l'affichage de la fenêtre de dialogue
+     * Méthod use to display dialog window
      */
     public void show() {
         alertDialog.show();
@@ -88,6 +92,7 @@ public class RequestDialog {
             }).start();
         }
     }
+
 
     public void setOnCancelListener(DialogInterface.OnCancelListener onDismissListener) {
         alertDialog.setOnCancelListener(onDismissListener);

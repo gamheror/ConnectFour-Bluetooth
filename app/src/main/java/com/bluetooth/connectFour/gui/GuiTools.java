@@ -21,6 +21,12 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
 public class GuiTools {
+    /**
+     * Method used to convert Dp to pixel
+     * @param context activities
+     * @param dp size in dp
+     * @return new values in pixel
+     */
     public static int convertDpToPixels(Context context, float dp) {
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, metrics);
