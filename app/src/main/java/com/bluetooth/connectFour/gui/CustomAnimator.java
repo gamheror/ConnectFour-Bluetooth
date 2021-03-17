@@ -32,7 +32,13 @@ import com.bluetooth.connectFour.R;
 
 public class CustomAnimator {
 
-    public void animateIconChange(final ImageView view, final Drawable newIcon, @Nullable final EndListener responseListener) {  // check that the fact that the view gets smaller does not affect the rest of the graphics
+
+    /** check that the fact that the view gets smaller does not affect the rest of the graphics
+     * @param view
+     * @param newIcon
+     * @param responseListener
+     */
+    public void animateIconChange(final ImageView view, final Drawable newIcon, @Nullable final EndListener responseListener) {
         Animation dwindleAnimation = AnimationUtils.loadAnimation(view.getContext(), R.anim.dwindle_icon);
         dwindleAnimation.setDuration(view.getResources().getInteger(R.integer.durationShort) / 2);
         final Animation enlargeAnimation = AnimationUtils.loadAnimation(view.getContext(), R.anim.enlarge_icon);
@@ -71,6 +77,15 @@ public class CustomAnimator {
         });
     }
 
+    /** create the size of the animator and return the set animator
+     * @param view
+     * @param initialWidthInPixels
+     * @param initialHeightInPixels
+     * @param finalWidthInPixels
+     * @param finalHeightInPixels
+     * @param duration
+     * @return
+     */
     public Animator createAnimatorSize(final View view, int initialWidthInPixels, int initialHeightInPixels, int finalWidthInPixels, int finalHeightInPixels, int duration) {
         AnimatorSet animatorSet = new AnimatorSet();
         Animator animatorWidth = createAnimatorWidth(view, initialWidthInPixels, finalWidthInPixels, duration);
@@ -80,6 +95,13 @@ public class CustomAnimator {
         return animatorSet;
     }
 
+    /**
+     * @param view
+     * @param initialPixels
+     * @param finalPixels
+     * @param duration
+     * @return
+     */
     public Animator createAnimatorWidth(final View view, int initialPixels, int finalPixels, int duration) {
         ValueAnimator animator = ValueAnimator.ofInt(initialPixels, finalPixels);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -97,6 +119,13 @@ public class CustomAnimator {
         return animator;
     }
 
+    /**
+     * @param view
+     * @param initialPixels
+     * @param finalPixels
+     * @param duration
+     * @return
+     */
     public Animator createAnimatorHeight(final View view, int initialPixels, int finalPixels, int duration) {
         ValueAnimator animator = ValueAnimator.ofInt(initialPixels, finalPixels);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -114,7 +143,8 @@ public class CustomAnimator {
         return animator;
     }
 
-
+    /** ending of the animation
+     */
     public abstract static class EndListener {
         public abstract void onAnimationEnd();
     }
