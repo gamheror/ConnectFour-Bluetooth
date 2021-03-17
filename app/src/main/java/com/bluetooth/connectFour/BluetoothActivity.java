@@ -128,6 +128,9 @@ public class BluetoothActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * @param fragmentName, the fragment we want to set
+     */
     public void setFragment(int fragmentName) {
         switch (fragmentName) {
             case PAIRING_FRAGMENT: {
@@ -143,8 +146,6 @@ public class BluetoothActivity extends AppCompatActivity {
                 break;
             }
             case GAME_FRAGMENT: {
-                // possible setting of the fragment
-
                 GameFragment gameFragment = new GameFragment();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -157,6 +158,9 @@ public class BluetoothActivity extends AppCompatActivity {
         }
     }
 
+    /** Get the current fragment
+     * @return the actual fragment
+     */
     public int getCurrentFragment() {
         if (currentFragment != -1) {
             return currentFragment;
@@ -174,9 +178,16 @@ public class BluetoothActivity extends AppCompatActivity {
         return -1;
     }
 
+    /** set the color piece of the player running the app
+     * @param s, the color of the pawns
+     */
     public void setColorPiece(String s){
         this.colorPiece = s;
     }
+
+    /**
+     * @return the color of the piece of the player
+     */
     public String getColorPiece(){
         if(this.colorPiece != null) {
             return this.colorPiece;
@@ -184,11 +195,17 @@ public class BluetoothActivity extends AppCompatActivity {
         return null;
     }
 
+    /** at the beginning set the txt that will be print to inform the player who will start to play
+     * @param txt
+     */
     public void setTxtActualPlayer(String txt){
         Log.i("wsh","set : " + txt);
         this.txtActualBeg = txt;
     }
 
+    /**
+     * @return the player who'll start to play
+     */
     public String getTxtActualPlayer(){
         Log.i("wsh","get : " + this.txtActualBeg);
         if(this.txtActualBeg != null) {
@@ -198,6 +215,8 @@ public class BluetoothActivity extends AppCompatActivity {
     }
 
     @Override
+    /** quit to conversation between the 2 devices, if the player is in game, ask a confirmation
+     */
     public void onBackPressed() {
         DialogInterface.OnClickListener confirmExitListener = new DialogInterface.OnClickListener() {
             @Override
@@ -217,6 +236,8 @@ public class BluetoothActivity extends AppCompatActivity {
         }
     }
 
+    /** quit to conversation between the 2 devices
+     */
     public void exitFromConversation() {
         if (global.getBluetoothCommunicator().getConnectedPeersList().size() > 0) {
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
@@ -227,6 +248,9 @@ public class BluetoothActivity extends AppCompatActivity {
         }
     }
 
+    /**ask if the player really want to leave the conversation with an alert dialog
+     * @param confirmListener
+     */
     protected void showConfirmExitDialog(DialogInterface.OnClickListener confirmListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
@@ -238,6 +262,9 @@ public class BluetoothActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * @return the state of the search, error, success,not supported, no permissions ect...
+     */
     public int startSearch() {
         if (global.getBluetoothCommunicator().isBluetoothLeSupported() == BluetoothCommunicator.SUCCESS) {
             if (Tools.hasPermissions(this, REQUIRED_PERMISSIONS)) {
@@ -264,6 +291,10 @@ public class BluetoothActivity extends AppCompatActivity {
         }
     }
 
+    /** stop the search and try to restore the bluetooth status
+     * @param tryRestoreBluetoothStatus, try to
+     * @return the state of the stop of the search
+     */
     public int stopSearch(boolean tryRestoreBluetoothStatus) {
         int advertisingCode = global.getBluetoothCommunicator().stopAdvertising(tryRestoreBluetoothStatus);
         int discoveringCode = global.getBluetoothCommunicator().stopDiscovery(tryRestoreBluetoothStatus);
@@ -281,62 +312,78 @@ public class BluetoothActivity extends AppCompatActivity {
         return BluetoothCommunicator.ERROR;
     }
 
+    /**
+     * @return true if the bluetooth communicator is searching, else return false
+     */
     public boolean isSearching() {
         return global.getBluetoothCommunicator().isAdvertising() && global.getBluetoothCommunicator().isDiscovering();
     }
 
+    /** Connect the device with the Peer in paramater
+     * @param peer
+     */
     public void connect(Peer peer) {
         stopSearch(false);
         global.getBluetoothCommunicator().connect(peer);
     }
 
+    /** when get a request for connection of the Peer, permit to accept it
+     * @param peer
+     */
     public void acceptConnection(Peer peer) {
         global.getBluetoothCommunicator().acceptConnection(peer);
     }
 
+    /** when get a request for connection of the Peer, permit to reject it
+     * @param peer
+     */
     public void rejectConnection(Peer peer) {
         global.getBluetoothCommunicator().rejectConnection(peer);
     }
 
+    /** permit to disconnect of the Peer
+     * @param peer
+     * @return true if the disconnection was a success
+     */
     public int disconnect(Peer peer) {
         return global.getBluetoothCommunicator().disconnect(peer);
     }
 
+    /**
+     * @return the fragment container
+     */
     public CoordinatorLayout getFragmentContainer() {
         return fragmentContainer;
     }
 
-
-
+    /** in this way the listener will listen to both this activity and the communicatorexample
+     * @param callback
+     */
     public void addCallback(Callback callback) {
-        // in this way the listener will listen to both this activity and the communicatorexample
         global.getBluetoothCommunicator().addCallback(callback);
         clientsCallbacks.add(callback);
     }
 
+    /** remove the callback wrapped to stop listening to the communicationexample
+     * @param callback
+     */
     public void removeCallback(Callback callback) {
         global.getBluetoothCommunicator().removeCallback(callback);
         clientsCallbacks.remove(callback);
     }
 
-    private void notifyMissingSearchPermission() {
-        for (int i = 0; i < clientsCallbacks.size(); i++) {
-            clientsCallbacks.get(i).onMissingSearchPermission();
-        }
-    }
-
-    private void notifySearchPermissionGranted() {
-        for (int i = 0; i < clientsCallbacks.size(); i++) {
-            clientsCallbacks.get(i).onSearchPermissionGranted();
-        }
-    }
-
+    /**
+     * notify all the clientCallbacks that we start the searching
+     */
     private void notifySearchStarted() {
         for (int i = 0; i < clientsCallbacks.size(); i++) {
             clientsCallbacks.get(i).onSearchStarted();
         }
     }
 
+    /**
+     * notify all the clientCallbacks that we stop the searching
+     */
     private void notifySearchStopped() {
         for (int i = 0; i < clientsCallbacks.size(); i++) {
             clientsCallbacks.get(i).onSearchStopped();

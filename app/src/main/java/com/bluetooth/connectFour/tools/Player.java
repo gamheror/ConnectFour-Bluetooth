@@ -4,7 +4,6 @@ import android.widget.TextView;
 
 public class Player {
 
-    private String id_bluetooth;
     private String color_piece;
     private int remainingPawn = 21;
     private TextView showRemainingPawn;
@@ -15,10 +14,6 @@ public class Player {
 
     public String getColor_piece() {
         return color_piece;
-    }
-
-    public String getId_bluetooth() {
-        return id_bluetooth;
     }
 
     public String getRemainingPawn(){

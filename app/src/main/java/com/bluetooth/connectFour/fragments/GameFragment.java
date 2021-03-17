@@ -45,9 +45,7 @@ public class GameFragment extends Fragment {
     private Global global;
     private BluetoothActivity activity;
     private static final String TAG = "gamefragment";
-    private TextView RedRemainingPaw;
     private TextView actualPlayerTxt;
-    private TextView YellowRemainingPaw;
     private BluetoothCommunicator.Callback communicatorCallback;
     private Chronometer simpleChronometer;
 
