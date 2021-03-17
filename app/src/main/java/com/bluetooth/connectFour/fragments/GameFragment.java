@@ -1,6 +1,5 @@
 package com.bluetooth.connectFour.fragments;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,8 +29,6 @@ import com.bluetooth.connectFour.MainActivity;
 import com.bluetooth.connectFour.adapters.GridAdapt;
 import com.bluetooth.connectFour.tools.Constants;
 import com.bluetooth.connectFour.tools.Player;
-
-
 
 public class GameFragment extends Fragment {
 
