@@ -1,7 +1,6 @@
 package com.bluetooth.connectFour.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import com.bluetooth.connectFour.tools.Player;
 
 public class GridAdapt extends BaseAdapter {
 
-    public static String msg;
     private int[] piecesTray = new int[42];
     private String[][] piecesPlayed = new String[7][6];
     private int[] piecesColumn = new int[7];
@@ -25,19 +23,39 @@ public class GridAdapt extends BaseAdapter {
         initGrid();
     }
 
+    /**
+     * BaseAdapter method
+     * How many items are in the data set represented by this Adapter.
+     * @return
+     */
     @Override
-    public int getCount() {
-        return piecesTray.length;
-    }
+    public int getCount() { return 0; }
 
+     /**
+     * BaseAdapter method
+     * Get the data item associated with the specified position in the data set.
+     * @return
+     */
     @Override
     public Object getItem(int position) { return piecesTray[position]; }
 
+    /**
+     * BaseAdapter method
+     * Get the row id associated with the specified position in the list.
+     * @param position
+     * @return
+     */
     @Override
-    public long getItemId(int position) {
-        return position;
-    }
+    public long getItemId(int position) { return position; }
 
+    /**
+     * BaseAdapter method
+     * Get a View that displays the data at the specified position in the data set.
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = inflter.inflate(R.layout.row_pion,parent,false);
@@ -47,6 +65,9 @@ public class GridAdapt extends BaseAdapter {
         return convertView;
     }
 
+    /**
+     * Initializes the empty grid
+     */
     public void initGrid(){
         for(int i = 0; i<=41; i++)
             piecesTray[i] = R.drawable.ic_pvide;
@@ -58,6 +79,13 @@ public class GridAdapt extends BaseAdapter {
         }
     }
 
+    /**
+     * Method that allows the placement of a piece by a player
+     * @param position Position of the part to be placed
+     * @param player Current player
+     * @param colorPhone Player's room color
+     * @return From the game after placing the part (IN_GAME, RES_EQUAL, RES_LOOSE, RES_WINS)
+     */
     public String placePiece(int position, Player player, String colorPhone){
         int column = position % 7;
 
@@ -83,20 +111,13 @@ public class GridAdapt extends BaseAdapter {
 
                     if (!player.playerWin(piecesPlayed)) {
                         if (!stillPlayable()) {
-                            Log.i("1","???");
-                            this.msg = "Egalité !";
                             return Constants.RES_EQUAL;
                         }
                     } else {
                         if(player.getColor_piece() == colorPhone) {
-                            Log.i("1","win");
-                            this.msg = "Vous avez gagné !";
                             return Constants.RES_WINS;
                         }
                         else{
-                            System.out.println("non");
-                            Log.i("1","perdu");
-                            this.msg = "Vous avez perdu !";
                             return Constants.RES_LOOSE;
                         }
                     }
@@ -111,6 +132,10 @@ public class GridAdapt extends BaseAdapter {
         return Constants.IN_GAME;
     }
 
+    /**
+     * Method used to check if the grid is not full
+     * @return Booleen
+     */
     private boolean stillPlayable() {
         boolean playable = false;
 

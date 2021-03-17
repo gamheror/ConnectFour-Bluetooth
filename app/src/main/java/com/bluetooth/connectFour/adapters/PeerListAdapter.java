@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.bluetooth.connectFour.gui;
+package com.bluetooth.connectFour.adapters;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.bluetooth.connectFour.R;
 import com.bluetooth.communicator.Peer;
+import com.bluetooth.connectFour.gui.CustomAnimator;
 
 import java.util.ArrayList;
 
@@ -49,36 +50,76 @@ public class PeerListAdapter extends BaseAdapter {
         inflater = activity.getLayoutInflater();
     }
 
+    /**
+     * BaseAdapter method
+     * How many items are in the data set represented by this Adapter.
+     * @return
+     */
     @Override
     public int getCount() {
         return array.size();
     }
 
+    /**
+     * BaseAdapter method
+     * Get the data item associated with the specified position in the data set.
+     * @return
+     */
     @Override
     public Object getItem(int i) {
         return array.get(i);
     }
 
+    /**
+     * BaseAdapter method
+     * Get the row id associated with the specified position in the list.
+     * @param i
+     * @return
+     */
     @Override
     public long getItemId(int i) {
         return i;
     }
 
+    /**
+     * BaseAdapter method
+     * Indicates whether the item ids are stable across changes to the underlying data.
+     * @return
+     */
     @Override
     public boolean hasStableIds() {
         return true;
     }
 
+    /**
+     * BaseAdapter method
+     * Get the type of View that will be created by getView(int, View, ViewGroup) for the specified item.
+     * @param position
+     * @return
+     */
     @Override
     public int getItemViewType(int position) {
         return HOST;
     }
 
+    /**
+     * BaseAdapter method
+     * Returns the number of types of Views that will be created by getView(int, View, ViewGroup).
+     * @return
+     */
     @Override
     public int getViewTypeCount() {
         return 1;
     }
 
+    /**
+     * BaseAdapter method
+     * Get a View that displays the data at the specified position in the data set.
+     * @param position
+     * @param view
+     * @param viewGroup
+     * @return
+     */
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
         final Object item = getItem(position);
@@ -95,6 +136,10 @@ public class PeerListAdapter extends BaseAdapter {
         return view;
     }
 
+    /**
+     * Method which adds a new device to the array list
+     * @param peer
+     */
     public synchronized void add(Peer peer) {
         if (array.size() == 0) {
             callback.onFirstItemAdded();
@@ -103,11 +148,21 @@ public class PeerListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    /**
+     * Method which adds a device to a given index
+     * @param index
+     * @param item
+     */
     public synchronized void set(int index, Peer item) {
         array.set(index, item);
         notifyDataSetChanged();
     }
 
+    /**
+     * Method that allows access to a device from the array list
+     * @param i
+     * @return
+     */
     public Peer get(int i) {
         return array.get(i);
     }
@@ -116,6 +171,11 @@ public class PeerListAdapter extends BaseAdapter {
         return array.indexOf(object);
     }
 
+    /**
+     * Method used to retrieve the index of a device found with its name
+     * @param uniqueName
+     * @return index of the device
+     */
     public int indexOfPeer(String uniqueName) {
         for (int i = 0; i < array.size(); i++) {
             Peer peer = array.get(i);
@@ -127,6 +187,10 @@ public class PeerListAdapter extends BaseAdapter {
         return -1;
     }
 
+    /**
+     * Method used to remove a device from the list
+     * @param peer
+     */
     public synchronized void remove(Peer peer) {
         if (array.remove(peer)) {
             notifyDataSetChanged();
@@ -137,6 +201,9 @@ public class PeerListAdapter extends BaseAdapter {
         }
     }
 
+    /**
+     * Method used to empty the list
+     */
     public synchronized void clear() {
         array.clear();
         notifyDataSetChanged();
@@ -145,18 +212,19 @@ public class PeerListAdapter extends BaseAdapter {
         }
     }
 
-    public int size() {
-        return array.size();
-    }
-
-    public void setCallback(Callback callback) {
-        this.callback = callback;
-    }
-
+    /**
+     * Method that returns a boolean to check if the element is clickable
+     * @return
+     */
     public boolean isClickable() {
         return isClickable;
     }
 
+    /**
+     * Method that allows write access to the isClickable boolean
+     * @param clickable
+     * @param showToast
+     */
     public void setClickable(boolean clickable, boolean showToast) {
         this.isClickable = clickable;
         this.showToast = showToast;

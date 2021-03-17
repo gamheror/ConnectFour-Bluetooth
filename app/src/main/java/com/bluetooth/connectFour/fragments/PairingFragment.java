@@ -43,7 +43,7 @@ import com.bluetooth.connectFour.R;
 import com.bluetooth.connectFour.gui.ButtonSearch;
 import com.bluetooth.connectFour.gui.CustomAnimator;
 import com.bluetooth.connectFour.gui.GuiTools;
-import com.bluetooth.connectFour.gui.PeerListAdapter;
+import com.bluetooth.connectFour.adapters.PeerListAdapter;
 import com.bluetooth.connectFour.gui.RequestDialog;
 import com.bluetooth.connectFour.tools.Constants;
 import com.bluetooth.connectFour.tools.Tools;
@@ -91,16 +91,28 @@ public class PairingFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         communicatorCallback = new BluetoothActivity.Callback() {
+            /**
+             * BluetoothActivity method
+             * Allows you to search for a bluetooth device
+             */
             @Override
             public void onSearchStarted() {
                 buttonSearch.setSearching(true, animator);
             }
 
+            /**
+             * Bluetooth Activity method
+             * Allows you to stop searching for a bluetooth device
+             */
             @Override
             public void onSearchStopped() {
                 buttonSearch.setSearching(false, animator);
             }
 
+            /**
+             * BluetoothActivity method
+             * Allows the sending of a connection request to a bluetooth device
+             */
             @Override
             public void onConnectionRequest(final Peer peer) {
                 super.onConnectionRequest(peer);
@@ -129,6 +141,10 @@ public class PairingFragment extends Fragment {
                 }
             }
 
+            /**
+             * BluetoothActivity method
+             * Allows to change fragment when the connection works
+             */
             @Override
             public void onConnectionSuccess(Peer peer, int source) {
                 super.onConnectionSuccess(peer, source);
@@ -137,6 +153,10 @@ public class PairingFragment extends Fragment {
                 activity.setFragment(BluetoothActivity.GAME_FRAGMENT);
             }
 
+            /**
+             * BluetoothActivity method
+             * Allows the display of a notification in case of connection failure
+             */
             @Override
             public void onConnectionFailed(Peer peer, int errorCode) {
                 super.onConnectionFailed(peer, errorCode);
@@ -160,6 +180,10 @@ public class PairingFragment extends Fragment {
                 }
             }
 
+            /**
+             * BluetoothActivity method
+             * Allows the display of the bluetooth device found
+             */
             @Override
             public void onPeerFound(Peer peer) {
                 super.onPeerFound(peer);
@@ -189,6 +213,10 @@ public class PairingFragment extends Fragment {
                 onPeerFound(newPeer);
             }
 
+            /**
+             * BluetoothActivity method
+             * Allows you to manage the lost connection
+             */
             @Override
             public void onPeerLost(Peer peer) {
                synchronized (lock) {
@@ -209,6 +237,9 @@ public class PairingFragment extends Fragment {
 
             }
 
+            /**
+             * Methods that allow management of device search permissions
+             */
             @Override
             public void onMissingSearchPermission() {
                 super.onMissingSearchPermission();
@@ -293,6 +324,9 @@ public class PairingFragment extends Fragment {
         });
     }
 
+    /**
+     * Bluetooth device search management methods
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -341,6 +375,9 @@ public class PairingFragment extends Fragment {
         }
     }
 
+    /**
+     * Method that allows the connection between two devices after sending a request from one
+     */
     private void connect(final Peer peer) {
         connectingPeer = peer;
         confirmConnectionPeer = peer;
@@ -365,6 +402,9 @@ public class PairingFragment extends Fragment {
         connectionConfirmDialog.show();
     }
 
+    /**
+     * Method that allows the search for bluetooth device
+     */
     protected void startSearch() {
         int result = activity.startSearch();
         if (result != BluetoothCommunicator.SUCCESS) {
@@ -380,6 +420,9 @@ public class PairingFragment extends Fragment {
         }
     }
 
+    /**
+     * Method used to stop searching for a bluetooth device
+     */
     private void stopSearch() {
         activity.stopSearch(connectingPeer == null);
     }
@@ -394,19 +437,33 @@ public class PairingFragment extends Fragment {
         setListViewClickable(false, true);
     }
 
+    /**
+     * Method that allows access to the confirmConnectionPeer variable
+     * @return
+     */
     public Peer getConfirmConnectionPeer() {
         return confirmConnectionPeer;
     }
 
+    /**
+     * Method that allows access to the connectionConfirmDialog variable
+     * @return
+     */
     public RequestDialog getConnectionConfirmDialog() {
         return connectionConfirmDialog;
     }
 
+    /**
+     * Method that allows the launch of the connection timer
+     */
     private void startConnectionTimer() {
         connectionTimer = new Timer(CONNECTION_TIMEOUT);
         connectionTimer.start();
     }
 
+    /**
+     * Method used to reset the connection timer
+     */
     private void resetConnectionTimer() {
         if (connectionTimer != null) {
             connectionTimer.cancel();
@@ -414,6 +471,9 @@ public class PairingFragment extends Fragment {
         }
     }
 
+    /**
+     * Method used to initialize the list of detected devices
+     */
     private void initializePeerList() {
         final PeerListAdapter.Callback callback = new PeerListAdapter.Callback() {
             @Override
@@ -445,12 +505,20 @@ public class PairingFragment extends Fragment {
         listViewGui.setAdapter(listView);
     }
 
+    /**
+     * Méthode qui supprime les éléments de la liste d'appareil détecté
+     */
     public void clearFoundPeers() {
         if (listView != null) {
             listView.clear();
         }
     }
 
+    /**
+     * Method that makes the items in the detected device list clickable
+     * @param isClickable
+     * @param showToast
+     */
     public void setListViewClickable(boolean isClickable, boolean showToast) {
         if (listView != null) {
             listView.setClickable(isClickable, showToast);
