@@ -8,29 +8,52 @@ public class Player {
     private int remainingPawn = 21;
     private TextView showRemainingPawn;
 
+    /** permit to associate a pawn color with the player
+     * @param jeton, the color of the pawn
+     */
     public Player(String jeton) {
         color_piece = jeton;
     }
 
+    /**
+     * @return the pawn's color of the player
+     */
     public String getColor_piece() {
         return color_piece;
     }
 
+    /**
+     * @return the number of remaining pawn
+     */
     public String getRemainingPawn(){
         return String.valueOf(remainingPawn);
     }
-    public void setViewText(TextView textview){
-        this.showRemainingPawn = textview;
+
+    /** set the text of remaining pawn that will be display
+     * @param text
+     */
+    public void setViewText(TextView text){
+        this.showRemainingPawn = text;
     }
 
+    /** get the text of remaining pawn that will be display
+     * @return the text
+     */
     public TextView getViewText(){
         return this.showRemainingPawn;
     }
 
+    /**
+     * decrease the number of remaining pawn of the player
+     */
     public void decreaseRemainingPawn(){
         remainingPawn -= 1;
     }
 
+    /** check if the player win
+     * @param game, the board game
+     * @return true if the player win, else false
+     */
     public boolean playerWin(final String[][] game) {
 
         // Check if player win by column
