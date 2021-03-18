@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bluetooth.connectFour.R;
 import com.bluetooth.connectFour.tools.Constants;
@@ -126,7 +127,7 @@ public class GridAdapt extends BaseAdapter {
                 }
             } while(!place);
         } else {
-            System.out.println("Essayez une autre colonne");
+            return Constants.OUT_COLUMN;
         }
 
         return Constants.IN_GAME;
