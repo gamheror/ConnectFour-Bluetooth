@@ -231,7 +231,10 @@ public class GameFragment extends Fragment {
 
                     String resGame = grid.placePiece(position, actualPlayer, colorPiece);
 
-                    if (global.getBluetoothCommunicator().getConnectedPeersList().size() > 0) {
+                    if(resGame == Constants.OUT_COLUMN){
+                        Toast.makeText(activity, "Colonne pleine", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (global.getBluetoothCommunicator().getConnectedPeersList().size() > 0) {
                         //sending a message in which bow the player played
                         Message message = new Message(global, "m", String.valueOf(position), global.getBluetoothCommunicator().getConnectedPeersList().get(0));
                         global.getBluetoothCommunicator().sendMessage(message);

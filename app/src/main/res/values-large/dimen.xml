@@ -22,6 +22,9 @@
     <dimen name="padding_grid"></dimen>
 
     <!-- Include -->
-    <dimen name="size_include">500dp</dimen>
+    <dimen name="size_include">1000dp</dimen>
     <dimen name="margin_top_include">40dp</dimen>
+
+    <!-- Pion -->
+    <dimen name="size_piece">370px</dimen>
 </resources>

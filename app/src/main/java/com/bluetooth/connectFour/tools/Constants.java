@@ -8,5 +8,6 @@ public class Constants {
     public final static String RES_LOOSE = "loose_game";
     public final static String RES_EQUAL = "equal_game";
     public final static String IN_GAME = "in_game";
+    public final static String OUT_COLUMN = "out_col";
 
 }
